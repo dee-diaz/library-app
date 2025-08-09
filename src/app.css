@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "tailwindcss-noise";
 
 @font-face {
   font-family: "PerfectlyNineties";
@@ -24,6 +25,11 @@
   font-display: swap;
 }
 
+:root {
+  --font-family-headings: "PerfectlyNineties", serif;
+  --font-family-body: "Inter", sans-serif;
+}
+
 body {
   -webkit-font-smoothing: antialiased;
   font-size-adjust: 0.52;
@@ -32,7 +38,7 @@ body {
 
 @utility container {
   margin-inline: auto;
-  padding-inline: 2rem;
+  padding-inline: 1rem;
 }
 
 @layer base {
@@ -55,4 +61,19 @@ body {
   --color-s-btn-secondary: hsla(240, 3%, 15%, 1);
   --color-t-primary: hsla(225, 7%, 89%, 1);
   --color-t-secondary: hsla(248, 3%, 54%, 1);
+  --color-b-primary: hsla(0, 0%, 14%, 1);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: var(--font-family-headings);
+}
+
+p,
+li,
+span {
+  font-family: var(--font-family-body);
 }

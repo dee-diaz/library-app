@@ -1,3 +1,3 @@
-import './style.css'
+import './app.css'
 // import { setupCounter } from './counter.js'
 

@@ -8,15 +8,16 @@
   </head>
   <body class="bg-s-primary noise-[100,20,5]">
     <div id="app">
-      <header class="header border-b border-b-primary py-4 md:py-6">
-        <div class="container flex justify-between items-center">
+      <div class="overlay fixed inset-0 z-10 hidden bg-s-overlay"></div>
+      <header class="header mb-20 border-b border-b-primary py-4 md:py-6">
+        <div class="container flex items-center justify-between">
           <a href="/">
             <img class="h-auto w-24 md:w-32" src="/logo.svg" alt="Shelf logo" />
           </a>
 
           <button
             type="button"
-            class="flex items-center gap-2 bg-s-btn-primary rounded-lg py-2 px-2.5 md:py-2.5 md:px-3"
+            class="btn-add flex items-center gap-2 rounded-lg bg-s-btn-primary px-2.5 py-2 transition-colors duration-300 ease-out hover:bg-s-btn-primary-hover md:px-3 md:py-2.5"
           >
             <svg
               width="18"
@@ -30,11 +31,65 @@
                 fill="black"
               />
             </svg>
-            <span class="text-base font-medium leading-5 translate-y-[1px]">Add a book</span>
+            <span class="translate-y-[1px] text-base leading-5 font-medium"
+              >Add a book</span
+            >
           </button>
         </div>
       </header>
-      <div class="container"></div>
+      <main class="min-h-[85svh] md:flex md:items-center">
+        <div class="container">
+          <div
+            id="card-empty"
+            class="card-empty mx-auto w-fit rounded-xl border border-b-primary bg-s-card px-6 py-12 text-center md:px-8 md:py-16"
+          >
+            <h1
+              class="mb-4 max-w-64 text-2xl text-t-primary md:max-w-96 md:text-4xl"
+            >
+              Your digital shelf is ready
+            </h1>
+            <p class="mb-8 max-w-64 text-base text-t-secondary md:max-w-80">
+              Start building your personal library by adding your first book
+            </p>
+
+            <button
+              type="button"
+              class="btn-add m-auto flex items-center gap-2 rounded-lg bg-s-btn-primary px-2.5 py-2 transition-colors duration-300 ease-out hover:bg-s-btn-primary-hover md:px-3 md:py-2.5"
+            >
+              <span class="translate-y-[1px] text-base leading-5 font-medium"
+                >Add your first book</span
+              >
+            </button>
+          </div>
+
+          <dialog
+            data-modal-add
+            class="w-full rounded-xl border border-b-primary bg-s-modal p-8 backdrop:bg-s-overlay backdrop:backdrop-blur-[10px] md:w-fit"
+          >
+            <div class="flex justify-end mb-3">
+              <button data-btn-close>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M16.0673 15.1828C16.1254 15.2409 16.1714 15.3098 16.2028 15.3857C16.2343 15.4616 16.2505 15.5429 16.2505 15.625C16.2505 15.7071 16.2343 15.7884 16.2028 15.8643C16.1714 15.9402 16.1254 16.0091 16.0673 16.0672C16.0092 16.1253 15.9403 16.1713 15.8644 16.2027C15.7885 16.2342 15.7072 16.2503 15.6251 16.2503C15.543 16.2503 15.4617 16.2342 15.3858 16.2027C15.3099 16.1713 15.241 16.1253 15.1829 16.0672L10.0001 10.8836L4.81729 16.0672C4.70002 16.1845 4.54096 16.2503 4.3751 16.2503C4.20925 16.2503 4.05019 16.1845 3.93292 16.0672C3.81564 15.9499 3.74976 15.7908 3.74976 15.625C3.74976 15.4591 3.81564 15.3001 3.93292 15.1828L9.11651 10L3.93292 4.81718C3.81564 4.69991 3.74976 4.54085 3.74976 4.375C3.74976 4.20914 3.81564 4.05008 3.93292 3.93281C4.05019 3.81553 4.20925 3.74965 4.3751 3.74965C4.54096 3.74965 4.70002 3.81553 4.81729 3.93281L10.0001 9.1164L15.1829 3.93281C15.3002 3.81553 15.4593 3.74965 15.6251 3.74965C15.791 3.74965 15.95 3.81553 16.0673 3.93281C16.1846 4.05008 16.2505 4.20914 16.2505 4.375C16.2505 4.54085 16.1846 4.69991 16.0673 4.81718L10.8837 10L16.0673 15.1828Z"
+                    fill="#E0E1E4"
+                  />
+                </svg>
+              </button>
+            </div>
+            <h2
+              class="border-b border-b-primary pb-5 text-center text-2xl text-t-primary md:text-3xl"
+            >
+              Add new book
+            </h2>
+          </dialog>
+        </div>
+      </main>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>

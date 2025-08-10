@@ -58,7 +58,11 @@ body {
 
   --color-s-primary: hsla(0, 0%, 7%, 1);
   --color-s-btn-primary: hsla(225, 7%, 89%, 1);
+  --color-s-btn-primary-hover: hsla(225, 8%, 76%, 1);
   --color-s-btn-secondary: hsla(240, 3%, 15%, 1);
+  --color-s-card: hsla(0, 0%, 100%, 0.02);
+  --color-s-overlay: hsla(0, 0%, 0%, 0.5);
+  --color-s-modal: hsla(240, 3%, 8%, 1);
   --color-t-primary: hsla(225, 7%, 89%, 1);
   --color-t-secondary: hsla(248, 3%, 54%, 1);
   --color-b-primary: hsla(0, 0%, 14%, 1);

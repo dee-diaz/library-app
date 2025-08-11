@@ -37,9 +37,11 @@
           </button>
         </div>
       </header>
-      <main class="min-h-[85svh] md:flex md:items-center">
+      <main
+        class="mb-24 min-h-[85svh] md:flex md:items-center md:has-[ul]:items-start"
+      >
         <div class="container">
-          <div
+          <!-- <div
             id="card-empty"
             class="card-empty mx-auto w-fit rounded-xl border border-b-primary bg-s-card px-6 py-12 text-center md:px-8 md:py-16"
           >
@@ -60,9 +62,9 @@
                 >Add your first book</span
               >
             </button>
-          </div>
+          </div> -->
 
-          <dialog
+          <!-- <dialog
             data-modal-add
             class="w-full rounded-xl border border-b-primary bg-s-modal p-8 backdrop:bg-s-overlay backdrop:backdrop-blur-[10px] md:w-fit"
           >
@@ -214,7 +216,297 @@
                 Add
               </button>
             </form>
-          </dialog>
+          </dialog> -->
+
+          <ul data-filters class="mb-9 flex flex-wrap gap-3 lg:mb-14">
+            <li>
+              <button
+                type="button"
+                class="rounded-full border border-b-primary px-4 py-2 text-t-secondary hover:bg-s-card"
+              >
+                Read
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="rounded-full border border-b-primary px-4 py-2 text-t-secondary hover:bg-s-card"
+              >
+                Not read
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="rounded-full border border-b-primary px-4 py-2 text-t-secondary hover:bg-s-card"
+              >
+                In progress
+              </button>
+            </li>
+          </ul>
+
+          <div class="grid gap-12">
+            <section id="reading">
+              <h3 class="mb-5 text-t-secondary">Reading</h3>
+              <div
+                class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-[repeat(auto-fit,_minmax(23rem,_1fr))]"
+              >
+                <div
+                  class="min-h-32 rounded-lg border border-b-primary bg-s-card p-4 transition-shadow duration-300 ease-out hover:shadow-card-hover active:shadow-card-hover md:p-5"
+                >
+                  <h3
+                    data-title
+                    class="mb-2 overflow-hidden text-lg font-medium text-ellipsis whitespace-nowrap text-t-primary capitalize"
+                  >
+                    The Psychology of Money
+                  </h3>
+                  <p class="mb-3 text-base text-t-secondary">
+                    by <span data-author class="capitalize">Morgan Housel</span>
+                  </p>
+                  <div class="flex items-center gap-2">
+                    <img data-status-icon src="/eye.svg" />
+                    <span data-status class="text-sm text-status-reading"
+                      >In progress</span
+                    >
+                  </div>
+                </div>
+
+                <div
+                  class="min-h-32 rounded-lg border border-b-primary bg-s-card p-4 transition-shadow duration-300 ease-out hover:shadow-card-hover active:shadow-card-hover md:p-5"
+                >
+                  <h3
+                    data-title
+                    class="mb-2 overflow-hidden text-lg font-medium text-ellipsis whitespace-nowrap text-t-primary capitalize"
+                  >
+                    Infinite Jest
+                  </h3>
+                  <p class="mb-3 text-base text-t-secondary">
+                    by
+                    <span data-author class="capitalize"
+                      >David Foster Wallace
+                    </span>
+                  </p>
+                  <div class="flex items-center gap-2">
+                    <img data-status-icon src="/eye.svg" />
+                    <span data-status class="text-sm text-status-reading"
+                      >In progress</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="to-read">
+              <h3 class="mb-5 text-t-secondary">Saved for later</h3>
+              <div
+                class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-[repeat(auto-fit,_minmax(23rem,_1fr))]"
+              >
+                <div
+                  class="min-h-32 rounded-lg border border-b-primary bg-s-card p-4 transition-shadow duration-300 ease-out hover:shadow-card-hover active:shadow-card-hover md:p-5"
+                >
+                  <h3
+                    data-title
+                    class="mb-2 overflow-hidden text-lg font-medium text-ellipsis whitespace-nowrap text-t-primary capitalize"
+                  >
+                    The moral animal: Why we are the way we are
+                  </h3>
+                  <p class="mb-3 text-base text-t-secondary">
+                    by <span data-author class="capitalize">Robert Wright</span>
+                  </p>
+                  <div class="flex items-center gap-2">
+                    <img data-status-icon src="/bookmark.svg" />
+                    <span data-status class="text-sm text-status-to-read"
+                      >To read</span
+                    >
+                  </div>
+                </div>
+
+                <div
+                  class="min-h-32 rounded-lg border border-b-primary bg-s-card p-4 transition-shadow duration-300 ease-out hover:shadow-card-hover active:shadow-card-hover md:p-5"
+                >
+                  <h3
+                    data-title
+                    class="mb-2 overflow-hidden text-lg font-medium text-ellipsis whitespace-nowrap text-t-primary capitalize"
+                  >
+                    A Short History of Decay
+                  </h3>
+                  <p class="mb-3 text-base text-t-secondary">
+                    by <span data-author class="capitalize">Emil Cioran</span>
+                  </p>
+                  <div class="flex items-center gap-2">
+                    <img data-status-icon src="/bookmark.svg" />
+                    <span data-status class="text-sm text-status-to-read"
+                      >To read</span
+                    >
+                  </div>
+                </div>
+
+                <div
+                  class="min-h-32 rounded-lg border border-b-primary bg-s-card p-4 transition-shadow duration-300 ease-out hover:shadow-card-hover active:shadow-card-hover md:p-5"
+                >
+                  <h3
+                    data-title
+                    class="mb-2 overflow-hidden text-lg font-medium text-ellipsis whitespace-nowrap text-t-primary capitalize"
+                  >
+                    On Bullshit
+                  </h3>
+                  <p class="mb-3 text-base text-t-secondary">
+                    by
+                    <span data-author class="capitalize"
+                      >Harry G. Frankfurt</span
+                    >
+                  </p>
+                  <div class="flex items-center gap-2">
+                    <img data-status-icon src="/bookmark.svg" />
+                    <span data-status class="text-sm text-status-to-read"
+                      >To read</span
+                    >
+                  </div>
+                </div>
+
+                <div
+                  class="min-h-32 rounded-lg border border-b-primary bg-s-card p-4 transition-shadow duration-300 ease-out hover:shadow-card-hover active:shadow-card-hover md:p-5"
+                >
+                  <h3
+                    data-title
+                    class="mb-2 overflow-hidden text-lg font-medium text-ellipsis whitespace-nowrap text-t-primary capitalize"
+                  >
+                    Existentialism Is a Humanism
+                  </h3>
+                  <p class="mb-3 text-base text-t-secondary">
+                    by
+                    <span data-author class="capitalize">Jean-Paul Sartre</span>
+                  </p>
+                  <div class="flex items-center gap-2">
+                    <img data-status-icon src="/bookmark.svg" />
+                    <span data-status class="text-sm text-status-to-read"
+                      >To read</span
+                    >
+                  </div>
+                </div>
+
+                <div
+                  class="min-h-32 rounded-lg border border-b-primary bg-s-card p-4 transition-shadow duration-300 ease-out hover:shadow-card-hover active:shadow-card-hover md:p-5"
+                >
+                  <h3
+                    data-title
+                    class="mb-2 overflow-hidden text-lg font-medium text-ellipsis whitespace-nowrap text-t-primary capitalize"
+                  >
+                    The Wisdom of Life
+                  </h3>
+                  <p class="mb-3 text-base text-t-secondary">
+                    by
+                    <span data-author class="capitalize"
+                      >Arthur Schopenhauer</span
+                    >
+                  </p>
+                  <div class="flex items-center gap-2">
+                    <img data-status-icon src="/bookmark.svg" />
+                    <span data-status class="text-sm text-status-to-read"
+                      >To read</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="completed">
+              <h3 class="mb-5 text-t-secondary">Completed</h3>
+              <div
+                class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-[repeat(auto-fit,_minmax(23rem,_1fr))]"
+              >
+                <div
+                  class="min-h-32 rounded-lg border border-b-primary bg-s-card p-4 transition-shadow duration-300 ease-out hover:shadow-card-hover active:shadow-card-hover md:p-5"
+                >
+                  <h3
+                    data-title
+                    class="mb-2 overflow-hidden text-lg font-medium text-ellipsis whitespace-nowrap text-t-primary capitalize"
+                  >
+                    Thus Spoke Zarathustra
+                  </h3>
+                  <p class="mb-3 text-base text-t-secondary">
+                    by
+                    <span data-author class="capitalize"
+                      >Friedrich Nietzsche</span
+                    >
+                  </p>
+                  <div class="flex justify-between">
+                    <div class="flex items-center gap-2">
+                      <img data-status-icon src="/check.svg" />
+                      <span data-status class="text-sm text-status-completed"
+                        >Read</span
+                      >
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                      <img class="-translate-y-px" src="/star.svg">
+                      <span data-rating class="text-t-secondary">5/5</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="min-h-32 rounded-lg border border-b-primary bg-s-card p-4 transition-shadow duration-300 ease-out hover:shadow-card-hover active:shadow-card-hover md:p-5"
+                >
+                  <h3
+                    data-title
+                    class="mb-2 overflow-hidden text-lg font-medium text-ellipsis whitespace-nowrap text-t-primary capitalize"
+                  >
+                    Meditations
+                  </h3>
+                  <p class="mb-3 text-base text-t-secondary">
+                    by
+                    <span data-author class="capitalize"
+                      >Marcus Aurelius</span
+                    >
+                  </p>
+                  <div class="flex justify-between">
+                    <div class="flex items-center gap-2">
+                      <img data-status-icon src="/check.svg" />
+                      <span data-status class="text-sm text-status-completed"
+                        >Read</span
+                      >
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                      <img class="-translate-y-px" src="/star.svg">
+                      <span data-rating class="text-t-secondary">4/5</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="min-h-32 rounded-lg border border-b-primary bg-s-card p-4 transition-shadow duration-300 ease-out hover:shadow-card-hover active:shadow-card-hover md:p-5"
+                >
+                  <h3
+                    data-title
+                    class="mb-2 overflow-hidden text-lg font-medium text-ellipsis whitespace-nowrap text-t-primary capitalize"
+                  >
+                    Bushido: The Samurai Code of Japan
+                  </h3>
+                  <p class="mb-3 text-base text-t-secondary">
+                    by
+                    <span data-author class="capitalize"
+                      >Inazo Nitobe</span
+                    >
+                  </p>
+                  <div class="flex justify-between">
+                    <div class="flex items-center gap-2">
+                      <img data-status-icon src="/check.svg" />
+                      <span data-status class="text-sm text-status-completed"
+                        >Read</span
+                      >
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                      <img class="-translate-y-px" src="/star.svg">
+                      <span data-rating class="text-t-secondary">3/5</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
         </div>
       </main>
     </div>

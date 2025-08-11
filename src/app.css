@@ -65,20 +65,24 @@ body {
   --color-s-card: hsla(0, 0%, 100%, 0.02);
   --color-s-overlay: hsla(0, 0%, 0%, 0.5);
   --color-s-modal: hsla(240, 3%, 8%, 1);
+
   --color-t-primary: hsla(225, 7%, 89%, 1);
   --color-t-secondary: hsla(248, 3%, 54%, 1);
   --color-t-placeholder: hsla(0, 0%, 25%, 1);
+
   --color-b-primary: hsla(0, 0%, 14%, 1);
+
+  --color-status-reading: hsla(48, 100%, 77%, 1);
+  --color-status-to-read: var(--color-t-secondary);
+  --color-status-completed: hsla(248, 67%, 74%, 1);
 
   --shadow-outline: 0 0 0 3px hsla(240, 3%, 25%, 80%);
   --shadow-outline-option: 0 0 0 2px hsla(225, 7%, 89%, 1);
+  --shadow-card-hover: 0 0 8px 0 rgba(255, 255, 255, 0.12);
 }
 
 h1,
-h2,
-h3,
-h4,
-h5 {
+h2 {
   font-family: var(--font-family-headings);
 }
 
@@ -91,4 +95,9 @@ span {
 select,
 ::picker(select) {
   appearance: base-select;
+}
+
+.active-filter {
+  background-color: hsla(240, 2%, 15%, 1);
+  border: 1px solid hsla(248, 3%, 54%, 0.2);
 }

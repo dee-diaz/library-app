@@ -29,38 +29,42 @@ function closeModal() {
   dialog.close();
 }
 
-selectStatus.addEventListener("change", () => {
-  const value = selectStatus.value;
-  if (value === "read") {
-    ratingContainer.classList.remove("hidden");
-    ratingContainer.classList.add("flex");
-    selectRating.classList.remove("hidden");
-    selectRating.classList.add("flex");
-  } else {
-    ratingContainer.classList.remove("flex");
-    ratingContainer.classList.add("hidden");
-    selectRating.classList.remove("flex");
-    selectRating.classList.add("hidden");
-  }
-
-  // Remove later
-  selectRating.addEventListener("change", () => {
-    console.log(selectRating.value);
+if (selectStatus) {
+  selectStatus.addEventListener("change", () => {
+    const value = selectStatus.value;
+    if (value === "read") {
+      ratingContainer.classList.remove("hidden");
+      ratingContainer.classList.add("flex");
+      selectRating.classList.remove("hidden");
+      selectRating.classList.add("flex");
+    } else {
+      ratingContainer.classList.remove("flex");
+      ratingContainer.classList.add("hidden");
+      selectRating.classList.remove("flex");
+      selectRating.classList.add("hidden");
+    }
+  
+    // Remove later
+    selectRating.addEventListener("change", () => {
+      console.log(selectRating.value);
+    });
   });
-});
+}
 
-addForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-});
+if (addForm) {
+  addForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+  });
+}
 
-dialog.addEventListener("click", e => {
-  const dialogDimensions = dialog.getBoundingClientRect()
-  if (
-    e.clientX < dialogDimensions.left ||
-    e.clientX > dialogDimensions.right ||
-    e.clientY < dialogDimensions.top ||
-    e.clientY > dialogDimensions.bottom
-  ) {
-    dialog.close()
-  }
-})
+// dialog.addEventListener("click", e => {
+//   const dialogDimensions = dialog.getBoundingClientRect()
+//   if (
+//     e.clientX < dialogDimensions.left ||
+//     e.clientX > dialogDimensions.right ||
+//     e.clientY < dialogDimensions.top ||
+//     e.clientY > dialogDimensions.bottom
+//   ) {
+//     dialog.close()
+//   }
+// })

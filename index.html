@@ -66,8 +66,11 @@
             data-modal-add
             class="w-full rounded-xl border border-b-primary bg-s-modal p-8 backdrop:bg-s-overlay backdrop:backdrop-blur-[10px] md:w-fit"
           >
-            <div class="flex justify-end mb-3">
-              <button data-btn-close>
+            <div class="mb-3 flex justify-end">
+              <button
+                data-btn-close
+                class="relative after:content-[''] after:absolute after:inset-[-0.5rem] focus:outline-none focus-visible:shadow-outline"
+              >
                 <svg
                   width="20"
                   height="20"
@@ -83,10 +86,133 @@
               </button>
             </div>
             <h2
-              class="border-b border-b-primary pb-5 text-center text-2xl text-t-primary md:text-3xl"
+              class="mb-6 border-b border-b-primary pb-5 text-center text-2xl text-t-primary md:text-3xl"
             >
               Add new book
             </h2>
+
+            <form id="add-form" class="w-full md:w-[25.5rem]">
+              <fieldset class="mb-5 flex flex-col gap-5 md:mb-6 md:gap-6">
+                <div class="input-control flex flex-col gap-2">
+                  <label for="title" class="text-base text-t-secondary"
+                    >Title</label
+                  >
+                  <input
+                    type="text"
+                    name="title"
+                    id="title"
+                    placeholder="Nausea"
+                    class="rounded-lg border border-b-primary p-3 text-t-primary placeholder:text-t-placeholder focus:outline-none focus-visible:shadow-outline"
+                  />
+                </div>
+                <div class="input-control flex flex-col gap-2">
+                  <label for="author" class="text-base text-t-secondary"
+                    >Author</label
+                  >
+                  <input
+                    type="text"
+                    name="author"
+                    id="author"
+                    placeholder="Jean-Paul Sartre"
+                    class="rounded-lg border border-b-primary p-3 text-t-primary placeholder:text-t-placeholder focus:outline-none focus-visible:shadow-outline"
+                  />
+                </div>
+              </fieldset>
+
+              <fieldset class="mb-10 flex flex-col gap-5 md:mb-11 md:gap-6">
+                <div class="input-control flex flex-col gap-2">
+                  <label for="status" class="text-base text-t-secondary"
+                    >Status</label
+                  >
+                  <select
+                    name="status"
+                    id="status"
+                    class="flex items-center rounded-lg border border-b-primary p-3 text-t-primary placeholder:text-t-placeholder focus:outline-none focus-visible:shadow-outline [&::picker-icon]:text-xs [&:open::picker-icon]:rotate-180"
+                  >
+                    <option
+                      value=""
+                      class="bg-s-overlay text-t-black  p-2 transition-all duration-[400ms] hover:bg-s-select-hover focus-visible:outline-2 focus-visible:outline-b-primary active:bg-s-select-hover"
+                    >
+                      Have you read it?
+                    </option>
+                    <option
+                      value="read"
+                      class="bg-s-overlay text-t-black p-2 font-medium transition-all duration-[400ms] hover:bg-s-select-hover focus-visible:outline-2 focus-visible:outline-b-primary active:bg-s-select-hover"
+                    >
+                      Read
+                    </option>
+                    <option
+                      value="not-read"
+                      class="bg-s-overlay text-t-black p-2 font-medium transition-all duration-[400ms] hover:bg-s-select-hover focus-visible:outline-2 focus-visible:outline-b-primary active:bg-s-select-hover"
+                    >
+                      Not read
+                    </option>
+                    <option
+                      value="reading"
+                      class="bg-s-overlay text-t-black p-2 font-medium transition-all duration-[400ms] hover:bg-s-select-hover focus-visible:outline-2 focus-visible:outline-b-primary active:bg-s-select-hover"
+                    >
+                      Reading
+                    </option>
+                  </select>
+                </div>
+
+                <div data-rating class="hidden input-control flex-col gap-2">
+                  <label for="rating" class="text-base text-t-secondary"
+                    >Rating</label
+                  >
+                  <select
+                    name="rating"
+                    id="rating"
+                    class="hidden items-center rounded-lg border border-b-primary p-3 text-t-primary placeholder:text-t-placeholder focus-visible:shadow-outline focus-visible:outline-none [&::picker-icon]:text-xs [&:open::picker-icon]:rotate-180"
+                  >
+                    <option
+                      value=""
+                      class="bg-s-overlay p-2 transition-all duration-[300ms] hover:bg-s-btn-primary-hover focus-visible:outline-2 focus-visible:outline-b-primary"
+                    >
+                      Rate the book
+                    </option>
+                    <option
+                      value="5/5"
+                      class="bg-s-overlay p-2 font-medium transition-all duration-[400ms] hover:bg-s-select-hover focus-visible:outline-2 focus-visible:outline-b-primary active:bg-s-select-hover"
+                    >
+                      5/5
+                    </option>
+                    <option
+                      value="4/5"
+                      class="bg-s-overlay p-2 font-medium transition-all duration-[400ms] hover:bg-s-select-hover focus-visible:outline-2 focus-visible:outline-b-primary active:bg-s-select-hover"
+                    >
+                      4/5
+                    </option>
+                    <option
+                      value="3/5"
+                      class="bg-s-overlay p-2 font-medium transition-all duration-[400ms] hover:bg-s-select-hover focus-visible:outline-2 focus-visible:outline-b-primary active:bg-s-select-hover"
+                    >
+                      3/5
+                    </option>
+                    <option
+                      value="2/5"
+                      class="bg-s-overlay p-2 font-medium transition-all duration-[400ms] hover:bg-s-select-hover focus-visible:outline-2 focus-visible:outline-b-primary active:bg-s-select-hover"
+                    >
+                      2/5
+                    </option>
+                    <option
+                      value="1/5"
+                      class="bg-s-overlay p-2 font-medium transition-all duration-[400ms] hover:bg-s-select-hover focus-visible:outline-2 focus-visible:outline-b-primary active:bg-s-select-hover"
+                    >
+                      1/5
+                    </option>
+                  </select>
+                </div>
+              </fieldset>
+
+              <button
+                type="submit"
+                form="add-form"
+                class="w-full rounded-lg bg-s-btn-secondary py-2.5 font-medium text-t-primary focus:outline-none focus-visible:shadow-outline transition-colors duration-200 hover:bg-s-btn-secondary-hover"
+              >
+                Add
+              </button>
+            </form>
           </dialog>
         </div>
       </main>

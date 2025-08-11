@@ -59,13 +59,19 @@ body {
   --color-s-primary: hsla(0, 0%, 7%, 1);
   --color-s-btn-primary: hsla(225, 7%, 89%, 1);
   --color-s-btn-primary-hover: hsla(225, 8%, 76%, 1);
+  --color-s-select-hover: hsla(225, 8%, 76%, 1);
   --color-s-btn-secondary: hsla(240, 3%, 15%, 1);
+  --color-s-btn-secondary-hover: hsla(240, 3%, 19%, 1);
   --color-s-card: hsla(0, 0%, 100%, 0.02);
   --color-s-overlay: hsla(0, 0%, 0%, 0.5);
   --color-s-modal: hsla(240, 3%, 8%, 1);
   --color-t-primary: hsla(225, 7%, 89%, 1);
   --color-t-secondary: hsla(248, 3%, 54%, 1);
+  --color-t-placeholder: hsla(0, 0%, 25%, 1);
   --color-b-primary: hsla(0, 0%, 14%, 1);
+
+  --shadow-outline: 0 0 0 3px hsla(240, 3%, 25%, 80%);
+  --shadow-outline-option: 0 0 0 2px hsla(225, 7%, 89%, 1);
 }
 
 h1,
@@ -80,4 +86,9 @@ p,
 li,
 span {
   font-family: var(--font-family-body);
+}
+
+select,
+::picker(select) {
+  appearance: base-select;
 }

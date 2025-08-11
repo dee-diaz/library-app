@@ -1,5 +1,14 @@
 import "./app.css";
-// import { setupCounter } from './counter.js'
+import Book from './components/Book.js';
+
+const STATUS = {
+  READ: "read",
+  READING: "reading",
+  NOTREAD: "not-read",
+}
+
+const newBook = new Book("Nausea", "Jan-Paul Sartre");
+newBook.changeStatus(STATUS.READ);
 
 const addButtons = document.querySelectorAll(".btn-add");
 const dialog = document.querySelector("dialog");

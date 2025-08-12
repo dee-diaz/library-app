@@ -5,7 +5,6 @@ function initModal() {
   const ratingContainer = document.querySelector("[data-rating]");
   const statusInput = document.querySelector("#status");
   const ratingInput = document.querySelector("#rating");
-  const form = document.querySelector("#add-form");
 
   function showModal() {
     dialog.showModal();
@@ -27,11 +26,6 @@ function initModal() {
       ratingContainer.classList.add("hidden");
       ratingInput.disabled = true;
     }
-
-    // Remove later
-    ratingInput.addEventListener("change", () => {
-      console.log(ratingInput.value);
-    });
   }
 
   // The modal closes when user clicks outside of it
@@ -51,7 +45,6 @@ function initModal() {
   closeBtn.addEventListener("click", closeModal);
   dialog.addEventListener("click", closeOnOutsideClick);
   statusInput.addEventListener("change", showRatingInputField);
-  form.addEventListener("submit", (e) => e.preventDefault());
 }
 
 export default initModal;

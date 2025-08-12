@@ -100,4 +100,5 @@ select,
 .active-filter {
   background-color: hsla(240, 2%, 15%, 1);
   border: 1px solid hsla(248, 3%, 54%, 0.2);
+  box-shadow: var(--shadow-card-hover);
 }

@@ -86,6 +86,7 @@
                     placeholder="Nausea"
                     class="rounded-lg border border-b-primary p-3 text-t-primary placeholder:text-t-placeholder focus:outline-none focus-visible:shadow-outline"
                   />
+                  <p class="error text-red-400 text-sm"></p>
                 </div>
                 <div class="input-control flex flex-col gap-2">
                   <label for="author" class="text-base text-t-secondary"
@@ -98,6 +99,7 @@
                     placeholder="Jean-Paul Sartre"
                     class="rounded-lg border border-b-primary p-3 text-t-primary placeholder:text-t-placeholder focus:outline-none focus-visible:shadow-outline"
                   />
+                  <p class="error text-red-400 text-sm">Please enter the author's name</p>
                 </div>
               </fieldset>
 
@@ -196,6 +198,31 @@
               </button>
             </form>
           </dialog>
+
+          <div id="book-cards">
+            <div class="grid gap-12">
+              <section id="reading">
+                <h3 class="hidden mb-5 text-t-secondary">Reading</h3>
+                <div
+                  class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-[repeat(auto-fit,_minmax(23rem,_1fr))]"
+                ></div>
+              </section>
+
+              <section id="to-read">
+                <h3 class="hidden mb-5 text-t-secondary">Saved for later</h3>
+                <div
+                  class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-[repeat(auto-fit,_minmax(23rem,_1fr))]"
+                ></div>
+              </section>
+
+              <section id="completed">
+                <h3 class="hidden mb-5 text-t-secondary">Completed</h3>
+                <div
+                  class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-[repeat(auto-fit,_minmax(23rem,_1fr))]"
+                ></div>
+              </section>
+            </div>
+          </div>
         </div>
       </main>
     </div>

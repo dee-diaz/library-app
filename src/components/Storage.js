@@ -11,7 +11,7 @@ Storage.prototype.getBooks = function () {
   } else {
     books = JSON.parse(localStorage.getItem("books"));
   }
-  console.table(books);
+  // console.table(books);
   return books;
 };
 
@@ -19,6 +19,7 @@ Storage.prototype.saveBook = function (book) {
   const books = this.getBooks();
   books.push(book);
   localStorage.setItem("books", JSON.stringify(books));
+  console.table(books);
 };
 
 Storage.prototype.deleteBook = function (id) {

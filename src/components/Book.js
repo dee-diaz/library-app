@@ -3,7 +3,7 @@ function Book(title, author) {
     throw Error("You must use the 'new' operator to call the constructor");
 
   Object.defineProperty(this, "id", {
-    value: crypto.randomUUID(),
+    value: generateRandomID(),
     writable: false,
     enumerable: true,
     configurable: false,
@@ -18,8 +18,15 @@ Book.prototype.setStatus = function (status) {
   this.status = status;
 };
 
-Book.prototype.setRating = function(rating) {
+Book.prototype.setRating = function (rating) {
   this.rating = rating;
+};
+
+function generateRandomID() {
+  const array = new Uint32Array(2);
+  crypto.getRandomValues(array);
+  const id = array[0].toString(36) + array[1].toString(36);
+  return id;
 }
 
 export default Book;

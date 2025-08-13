@@ -1,4 +1,41 @@
-export function createBookCard(title, author, readingStatus, rating) {
+export function renderEmptyStateCard() {
+  const mainContainer = document.querySelector("#main-content");
+
+  const cardEmpty = document.createElement("div");
+  cardEmpty.id = "card-empty";
+  cardEmpty.className =
+    "mx-auto w-fit rounded-xl border border-b-primary bg-s-card px-6 py-12 text-center md:px-8 md:py-16";
+
+  const heading = document.createElement("h1");
+  heading.className =
+    "mb-4 max-w-64 text-2xl text-t-primary md:max-w-96 md:text-4xl";
+  heading.textContent = "Your digital shelf is ready";
+
+  const para = document.createElement("p");
+  para.className = "mb-8 max-w-64 text-base text-t-secondary md:max-w-80";
+  para.textContent =
+    "Start building your personal library by adding your first book";
+
+  const button = document.createElement("button");
+  button.setAttribute("data-btn-add", "");
+  button.setAttribute("type", "button");
+  button.className =
+    "m-auto flex items-center gap-2 rounded-lg bg-s-btn-primary px-2.5 py-2 transition-colors duration-300 ease-out hover:bg-s-btn-primary-hover md:px-3 md:py-2.5";
+
+  const span = document.createElement("span");
+  span.className = "translate-y-[1px] text-base leading-5 font-medium";
+  span.textContent = "Add your first book";
+
+  button.appendChild(span);
+
+  cardEmpty.appendChild(heading);
+  cardEmpty.appendChild(para);
+  cardEmpty.appendChild(button);
+
+  mainContainer.appendChild(cardEmpty);
+}
+
+export function renderBook(id, title, author, readingStatus, rating) {
   const STATUS = {
     READ: "read",
     NOTREAD: "not-read",
@@ -13,11 +50,41 @@ export function createBookCard(title, author, readingStatus, rating) {
 
   const bookCard = document.createElement("div");
   bookCard.className =
-    "relative min-h-32 rounded-lg border border-b-primary bg-s-card p-4 transition-shadow duration-300 ease-out hover:shadow-card-hover active:shadow-card-hover md:p-5";
+    "card relative min-h-32 cursor-pointer rounded-lg border border-b-primary bg-s-card p-4 transition-shadow duration-300 ease-out hover:shadow-card-hover active:shadow-card-hover md:p-5";
+  bookCard.setAttribute("data-id", id);
 
   const contextMenu = document.createElement("div");
   contextMenu.className =
-    "group absolute top-3 right-3 flex cursor-pointer items-center gap-2 rounded-xl border border-b-primary bg-s-modal px-3 py-2.5";
+    "hidden absolute top-3 right-3 z-10 w-28 flex-col overflow-hidden rounded-xl border border-b-primary bg-s-modal";
+  contextMenu.setAttribute("data-context-menu", "");
+  const btnEdit = document.createElement("button");
+  btnEdit.setAttribute("data-btn-edit", "");
+  btnEdit.className =
+    "flex items-center gap-2 border-b border-b-b-primary py-2 transition-colors duration-200 hover:bg-[#0C0C0D]";
+  const btnEditIcon = document.createElement("img");
+  btnEditIcon.src = "/edit.svg";
+  btnEditIcon.className = "pl-3";
+  const btnEditText = document.createElement("span");
+  btnEditText.className = "font-medium text-t-primary";
+  btnEditText.textContent = "Edit";
+  btnEdit.appendChild(btnEditIcon);
+  btnEdit.appendChild(btnEditText);
+
+  const btnDelete = document.createElement("button");
+  btnDelete.setAttribute("data-btn-delete", "");
+  btnDelete.className =
+    "flex items-center gap-2 py-2 transition-colors duration-200 hover:bg-[#0C0C0D]";
+  const btnDeleteIcon = document.createElement("img");
+  btnEditIcon.src = "/delete.svg";
+  btnEditIcon.className = "pl-3";
+  const btnDeleteText = document.createElement("span");
+  btnDeleteText.className = "font-medium text-t-primary";
+  btnDeleteText.textContent = "Delete";
+  btnDelete.appendChild(btnDeleteIcon);
+  btnDelete.appendChild(btnDeleteText);
+
+  contextMenu.appendChild(btnEdit);
+  contextMenu.appendChild(btnDelete);
 
   const svgNS = "http://www.w3.org/2000/svg";
   const svg = document.createElementNS(svgNS, "svg");
@@ -100,7 +167,6 @@ export function createBookCard(title, author, readingStatus, rating) {
   ratingCont.appendChild(ratingIcon);
   ratingCont.appendChild(ratingText);
 
-
   statusCont.appendChild(icon);
   statusCont.appendChild(statusText);
 
@@ -109,24 +175,6 @@ export function createBookCard(title, author, readingStatus, rating) {
   bookCard.appendChild(bookAuthor);
   bookCard.appendChild(statusCont);
   bookCard.appendChild(ratingCont);
-}
 
-const mainContentParent = document.querySelector("main");
-
-export function renderLayout() {
-  const mainBookContainer = document.createElement("div");
-  mainBookContainer.id = "book-cards";
-
-  const sectionsContainer = document.createElement("section");
-  sectionsContainer.className = "grid gap-12";
-
-
-  mainBookContainer.appendChild(sectionsContainer);
-  mainContentParent.appendChild(mainBookContainer);
-}
-
-
-export function createSection(name) {
-  const section = document.createElement("section");
-
+  return bookCard;
 }

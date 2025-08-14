@@ -30,7 +30,7 @@ function addBookToLibrary(title, author, readingStatus, rating) {
 }
 
 function displayBookCard(book) {
-  const bookCard = renderBook(book.id, title, author, book.status, book.rating);
+  const bookCard = renderBook(book.id, book.title, book.author, book.status, book.rating);
   const sectionToAppendTo = defineSection(book.status);
   const gridContainer = sectionToAppendTo.querySelector(".grid");
   gridContainer.appendChild(bookCard);

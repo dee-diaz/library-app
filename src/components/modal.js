@@ -1,3 +1,5 @@
+import { clearAllErrors } from "../main";
+
 function initModal() {
   const addButtons = document.querySelectorAll("[data-btn-add]");
   const dialog = document.querySelector("dialog");
@@ -7,6 +9,7 @@ function initModal() {
   const ratingInput = document.querySelector("#rating");
 
   function showModal() {
+    clearAllErrors();
     dialog.showModal();
   }
 

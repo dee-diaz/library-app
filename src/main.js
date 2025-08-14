@@ -8,6 +8,9 @@ import { renderEmptyStateCard, renderBook } from "./components/render.js";
 const myLibrary = new Storage();
 const books = myLibrary.getBooks();
 const form = document.querySelector("#add-form");
+const inputTitle = document.querySelector("#title");
+const inputAuthor = document.querySelector("#author");
+form.setAttribute("novalidate", "");
 const ratingContainer = document.querySelector("[data-rating]");
 const cards = document.querySelectorAll(".card");
 const deleteBtn = document.querySelector("[data-btn-delete]");
@@ -17,23 +20,6 @@ const sections = {
   toRead: document.querySelector("#to-read"),
   completed: document.querySelector("#completed"),
 };
-
-const formElements = Object.assign(
-  {},
-  (() => {
-    const inputTitle = document.querySelector("#title");
-    const inputAuthor = document.querySelector("#author");
-
-    return {
-      inputTitle,
-      inputControlTitle: inputTitle.closest(".input-control"),
-      inputTitleError: inputTitle.nextElementSibling,
-      inputAuthor,
-      inputControlAuthor: inputAuthor.closest(".input-control"),
-      inputAuthorError: inputAuthor.nextElementSibling,
-    };
-  })(),
-);
 
 function addBookToLibrary(title, author, readingStatus, rating) {
   const book = new Book(title, author);
@@ -136,28 +122,61 @@ function toggleContextMenu(e) {
   }
 }
 
+function showError(input, message) {
+  input.classList.add("border-red-400");
+  input.nextElementSibling.classList.add("opacity-100");
+  input.nextElementSibling.textContent = message;
+}
+
+function removeError(input) {
+  input.classList.remove("border-red-400");
+  input.nextElementSibling.classList.remove("opacity-100");
+  input.nextElementSibling.textContent = "";
+}
+
+function validateField(input) {
+  const minLength = 2;
+  const errorMessages = {
+    title: "Please enter the book title",
+    author: "Please enter the author's name",
+  };
+
+  if (input.value.trim().length < minLength) {
+    showError(input, errorMessages[input.id]);
+    return false;
+  } else {
+    removeError(input);
+    return true;
+  }
+}
+
+export function clearAllErrors() {
+  removeError(inputTitle);
+  removeError(inputAuthor);
+}
+
 function handleUserInput(e) {
   e.preventDefault();
-  const formData = new FormData(e.target);
-  const values = Object.fromEntries(formData.entries());
-  if (!values.title) {
-    formElements.inputTitle.classList.add("border-red-400");
-    formElements.inputTitleError.textContent = "Please enter the book title";
-  }
 
-  if (!values.author) {
-    formElements.inputAuthor.classList.add("border-red-400");
-  }
+  const titleValid = validateField(inputTitle);
+  const authorValid = validateField(inputAuthor);
 
-  // addBookToLibrary(values.title, values.author, values.status, values.rating);
-  // form.reset();
-  // ratingContainer.classList.add("hidden");
+  if (titleValid && authorValid) {
+    const formData = new FormData(e.target);
+    const values = Object.fromEntries(formData.entries());
+
+    addBookToLibrary(values.title, values.author, values.status, values.rating);
+    form.reset();
+    ratingContainer.classList.add("hidden");
+  }
 }
 
 window.addEventListener("DOMContentLoaded", () => {
   showCards();
   initModal();
   form.addEventListener("submit", handleUserInput);
+  inputTitle.addEventListener("input", () => validateField(inputTitle));
+  inputAuthor.addEventListener("input", () => validateField(inputAuthor));
   // deleteBtn.addEventListener("click", deleteBookFromLibrary);
   cards.forEach((card) => card.addEventListener("click", toggleContextMenu));
 });

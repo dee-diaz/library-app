@@ -74,32 +74,36 @@
             </h2>
 
             <form id="add-form" class="w-full md:w-[25.5rem]">
-              <fieldset class="mb-5 flex flex-col gap-5 md:mb-6 md:gap-6">
-                <div class="input-control flex flex-col gap-2">
+              <fieldset class="mb-1 flex flex-col gap-1">
+                <div class="input-control h-28 flex flex-col gap-2">
                   <label for="title" class="text-base text-t-secondary"
                     >Title</label
                   >
                   <input
                     type="text"
+                    required
+                    minlength="2"
                     name="title"
                     id="title"
                     placeholder="Nausea"
                     class="rounded-lg border border-b-primary p-3 text-t-primary placeholder:text-t-placeholder focus:outline-none focus-visible:shadow-outline"
                   />
-                  <p class="error text-red-400 text-sm"></p>
+                  <p class="error opacity-0 transition-opacity duration-200 text-red-400 text-sm"></p>
                 </div>
-                <div class="input-control flex flex-col gap-2">
+                <div class="input-control h-28 flex flex-col gap-2">
                   <label for="author" class="text-base text-t-secondary"
                     >Author</label
                   >
                   <input
                     type="text"
+                    required
+                    minlength="2"
                     name="author"
                     id="author"
                     placeholder="Jean-Paul Sartre"
                     class="rounded-lg border border-b-primary p-3 text-t-primary placeholder:text-t-placeholder focus:outline-none focus-visible:shadow-outline"
                   />
-                  <p class="error text-red-400 text-sm">Please enter the author's name</p>
+                  <p class="error opacity-0 transition-opacity duration-200 text-red-400 text-sm"></p>
                 </div>
               </fieldset>
 

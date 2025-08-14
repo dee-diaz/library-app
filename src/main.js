@@ -6,6 +6,7 @@ import initModal from "./components/modal.js";
 import { renderEmptyStateCard, renderBook } from "./components/render.js";
 
 const myLibrary = new Storage();
+const dialog = document.querySelector("dialog");
 const books = myLibrary.getBooks();
 const form = document.querySelector("#add-form");
 const inputTitle = document.querySelector("#title");
@@ -59,8 +60,17 @@ function defineSection(readingStatus) {
       section = sections.reading;
       break;
   }
-
+  showSectionTitle(section);
   return section;
+}
+
+function showSectionTitle(section) {
+  const title = section.querySelector("[data-section-title]");
+  if (title.classList.contains("hidden")) {
+    title.classList.remove("hidden");
+  } else {
+    return;
+  }
 }
 
 function removeEmptyCard() {
@@ -168,6 +178,7 @@ function handleUserInput(e) {
     addBookToLibrary(values.title, values.author, values.status, values.rating);
     form.reset();
     ratingContainer.classList.add("hidden");
+    dialog.close();
   }
 }
 

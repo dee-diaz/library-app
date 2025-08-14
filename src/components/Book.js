@@ -10,7 +10,7 @@ function Book(title, author) {
   });
   this.title = title;
   this.author = author;
-  this.status = "";
+  this.status = "not-read";
   this.rating = "";
 }
 

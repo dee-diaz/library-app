@@ -129,6 +129,9 @@ export function renderBook(id, title, author, readingStatus, rating) {
 
   bookAuthor.appendChild(name);
 
+  const bottomCont = document.createElement("div");
+  bottomCont.className = "flex justify-between";
+
   const statusCont = document.createElement("div");
   statusCont.className = "flex items-center gap-2";
 
@@ -156,13 +159,20 @@ export function renderBook(id, title, author, readingStatus, rating) {
   }
 
   const ratingCont = document.createElement("div");
-  ratingCont.className = "flex items-center gap-2";
+  ratingCont.className = "hidden items-center gap-2";
   const ratingIcon = document.createElement("img");
   ratingIcon.className = "-translate-y-px";
   ratingIcon.src = "/star.svg";
   const ratingText = document.createElement("span");
   ratingText.className = "text-t-secondary";
   ratingText.innerText = `${rating}`;
+  if (readingStatus === STATUS.READ) {
+    ratingCont.classList.remove("hidden");
+    ratingCont.classList.add("flex");
+  } else {
+    ratingCont.classList.remove("flex");
+    ratingCont.classList.add("hidden");
+  }
 
   ratingCont.appendChild(ratingIcon);
   ratingCont.appendChild(ratingText);
@@ -170,11 +180,13 @@ export function renderBook(id, title, author, readingStatus, rating) {
   statusCont.appendChild(icon);
   statusCont.appendChild(statusText);
 
+  bottomCont.appendChild(statusCont);
+  bottomCont.appendChild(ratingCont);
+
   bookCard.appendChild(contextMenu);
   bookCard.appendChild(bookTitle);
   bookCard.appendChild(bookAuthor);
-  bookCard.appendChild(statusCont);
-  bookCard.appendChild(ratingCont);
+  bookCard.appendChild(bottomCont);
 
   return bookCard;
 }

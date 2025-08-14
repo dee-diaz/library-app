@@ -11,7 +11,6 @@ Storage.prototype.getBooks = function () {
   } else {
     books = JSON.parse(localStorage.getItem("books"));
   }
-  // console.table(books);
   return books;
 };
 

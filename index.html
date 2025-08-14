@@ -9,7 +9,7 @@
   <body class="bg-s-primary noise-[100,20,5]">
     <div id="app">
       <header class="header mb-20 border-b border-b-primary py-4 md:py-6">
-        <div class="container flex items-center justify-between">
+        <div class="container flex items-center justify-between md:px-0">
           <a href="/">
             <img class="h-auto w-24 md:w-32" src="/logo.svg" alt="Shelf logo" />
           </a>
@@ -38,9 +38,9 @@
         </div>
       </header>
       <main
-        class="mb-24 min-h-[85svh] md:flex md:items-center md:has-[ul]:items-start"
+        class="pb-24 has-[#card-empty]:min-h-[85svh] md:flex md:items-center md:has-[ul]:items-start"
       >
-        <div id="main-content" class="container">
+        <div id="main-content" class="container md:px-0">
           <dialog
             data-modal-add
             class="w-full rounded-xl border border-b-primary bg-s-modal p-8 backdrop:bg-s-overlay backdrop:backdrop-blur-[10px] md:w-fit"
@@ -204,7 +204,7 @@
           </dialog>
 
           <div id="book-cards">
-            <div class="grid gap-12">
+            <div class="grid has-[.card]:gap-12">
               <section id="reading">
                 <h3 data-section-title class="hidden mb-5 text-t-secondary">Reading</h3>
                 <div

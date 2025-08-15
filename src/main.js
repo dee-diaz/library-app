@@ -7,6 +7,7 @@ import { renderEmptyStateCard, renderBook } from "./components/render.js";
 
 const myLibrary = new Storage();
 const dialog = document.querySelector("dialog");
+const bookContainer = document.querySelector("#book-cards");
 const form = document.querySelector("#add-form");
 const inputTitle = document.querySelector("#title");
 const inputAuthor = document.querySelector("#author");
@@ -130,27 +131,44 @@ function deleteBookFromLibrary(e) {
 }
 
 function toggleContextMenu(e) {
-  const currentCard = e.currentTarget;
-  const deleteBtn = currentCard.querySelector("[data-btn-delete]");
-  // const editBtn = currentCard.querySelector("[data-btn-edit]");
-  const contextMenu = currentCard.querySelector("[data-context-menu]");
-  const menuDimensions = contextMenu.getBoundingClientRect();
-  let isVisible = contextMenu.classList.contains("flex");
+  const currentCard = e.target.closest(".card");
 
-  contextMenu.classList.remove("hidden");
-  contextMenu.classList.add("flex");
+  if (currentCard) {
+    const contextMenu = currentCard.querySelector("[data-context-menu]");
+    const deleteBtn = currentCard.querySelector("[data-btn-delete]");
+    const menuDimensions = contextMenu.getBoundingClientRect();
+    const cardDimensions = currentCard.getBoundingClientRect();
+    let isVisible = contextMenu.classList.contains("flex");
+    closeContextMenus();
+    contextMenu.classList.remove("hidden");
+    contextMenu.classList.add("flex");
 
-  if (
-    (e.clientX < menuDimensions.left && isVisible) ||
-    (e.clientX > menuDimensions.right && isVisible) ||
-    (e.clientY < menuDimensions.top && isVisible) ||
-    (e.clientY > menuDimensions.bottom && isVisible)
-  ) {
-    contextMenu.classList.remove("flex");
-    contextMenu.classList.add("hidden");
+    if (
+      (e.clientX < menuDimensions.left && isVisible) ||
+      (e.clientX > menuDimensions.right && isVisible) ||
+      (e.clientY < menuDimensions.top && isVisible) ||
+      (e.clientY > menuDimensions.bottom && isVisible)
+    ) {
+      contextMenu.classList.remove("flex");
+      contextMenu.classList.add("hidden");
+    }
+    deleteBtn.addEventListener("click", deleteBookFromLibrary);
+  } else {
+    closeContextMenus();
   }
+}
 
-  deleteBtn.addEventListener("click", deleteBookFromLibrary);
+function closeContextMenus() {
+  const cms = document.querySelectorAll("[data-context-menu]");
+  const deleteBtns = document.querySelectorAll("[data-btn-delete]");
+  cms.forEach((cm) => {
+    if (cm.classList.contains("flex")) {
+      cm.classList.remove("flex");
+      cm.classList.add("hidden");
+    }
+  });
+
+  deleteBtns.forEach(btn => btn.removeEventListener("click", deleteBookFromLibrary))
 }
 
 function showError(input, message) {
@@ -210,6 +228,5 @@ window.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", handleUserInput);
   inputTitle.addEventListener("input", () => validateField(inputTitle));
   inputAuthor.addEventListener("input", () => validateField(inputAuthor));
-  const cards = document.querySelectorAll(".card");
-  cards.forEach((card) => card.addEventListener("click", toggleContextMenu));
+  bookContainer.addEventListener("click", toggleContextMenu);
 });

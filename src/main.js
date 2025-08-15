@@ -7,14 +7,11 @@ import { renderEmptyStateCard, renderBook } from "./components/render.js";
 
 const myLibrary = new Storage();
 const dialog = document.querySelector("dialog");
-const bookContainer = document.querySelector("#book-cards");
 const form = document.querySelector("#add-form");
 form.setAttribute("novalidate", "");
 const inputTitle = document.querySelector("#title");
 const inputAuthor = document.querySelector("#author");
 const ratingContainer = document.querySelector("[data-rating]");
-const deleteBtn = document.querySelector("[data-btn-delete]");
-const editBtn = document.querySelector("[data-btn-edit]");
 const sections = {
   reading: document.querySelector("#reading"),
   toRead: document.querySelector("#to-read"),
@@ -126,8 +123,12 @@ function deleteBookFromLibrary(e) {
     if (result.isConfirmed) {
       myLibrary.deleteBook(bookId);
       closestCard.remove();
-      showCards();
       hideSectionAndTitle(closestSection);
+      const books = myLibrary.getBooks();
+      if (books.length === 0) {
+        renderEmptyStateCard();
+        initModal();
+      }
     }
   });
 }
@@ -170,7 +171,9 @@ function closeContextMenus() {
     }
   });
 
-  deleteBtns.forEach(btn => btn.removeEventListener("click", deleteBookFromLibrary))
+  deleteBtns.forEach((btn) =>
+    btn.removeEventListener("click", deleteBookFromLibrary),
+  );
 }
 
 function showError(input, message) {
@@ -229,5 +232,5 @@ window.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", handleUserInput);
   inputTitle.addEventListener("input", () => validateField(inputTitle));
   inputAuthor.addEventListener("input", () => validateField(inputAuthor));
-  bookContainer.addEventListener("click", toggleContextMenu);
+  window.addEventListener("click", toggleContextMenu);
 });

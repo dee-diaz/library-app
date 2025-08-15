@@ -9,6 +9,7 @@ const myLibrary = new Storage();
 const dialog = document.querySelector("dialog");
 const bookContainer = document.querySelector("#book-cards");
 const form = document.querySelector("#add-form");
+form.setAttribute("novalidate", "");
 const inputTitle = document.querySelector("#title");
 const inputAuthor = document.querySelector("#author");
 const ratingContainer = document.querySelector("[data-rating]");
@@ -125,6 +126,7 @@ function deleteBookFromLibrary(e) {
     if (result.isConfirmed) {
       myLibrary.deleteBook(bookId);
       closestCard.remove();
+      showCards();
       hideSectionAndTitle(closestSection);
     }
   });
@@ -206,7 +208,6 @@ export function clearAllErrors() {
 
 function handleUserInput(e) {
   e.preventDefault();
-  form.setAttribute("novalidate", "");
 
   const titleValid = validateField(inputTitle);
   const authorValid = validateField(inputAuthor);

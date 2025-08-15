@@ -7,11 +7,10 @@ import { renderEmptyStateCard, renderBook } from "./components/render.js";
 
 const myLibrary = new Storage();
 const dialog = document.querySelector("dialog");
-const books = myLibrary.getBooks();
+// const books = myLibrary.getBooks();
 const form = document.querySelector("#add-form");
 const inputTitle = document.querySelector("#title");
 const inputAuthor = document.querySelector("#author");
-// form.setAttribute("novalidate", "");
 const ratingContainer = document.querySelector("[data-rating]");
 const cards = document.querySelectorAll(".card");
 const deleteBtn = document.querySelector("[data-btn-delete]");
@@ -22,7 +21,6 @@ const sections = {
   completed: document.querySelector("#completed"),
 };
 
-console.log(books);
 
 function addBookToLibrary(title, author, readingStatus, rating) {
   const book = new Book(title, author);
@@ -86,7 +84,13 @@ function removeEmptyCard() {
 }
 
 function showCards() {
-  if (books.length === 0) renderEmptyStateCard();
+  const books = myLibrary.getBooks();
+  if (books.length === 0) {
+    renderEmptyStateCard();
+    console.log("No books in local storage");
+  } else {
+    books.forEach(book => displayBookCard(book));
+  }
 }
 
 function deleteBookFromLibrary(e) {

@@ -29,6 +29,7 @@ Storage.prototype.deleteBook = function (id) {
     }
   });
   localStorage.setItem("books", JSON.stringify(books));
+  console.table(books);
 };
 
 export default Storage;

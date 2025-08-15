@@ -7,12 +7,10 @@ import { renderEmptyStateCard, renderBook } from "./components/render.js";
 
 const myLibrary = new Storage();
 const dialog = document.querySelector("dialog");
-// const books = myLibrary.getBooks();
 const form = document.querySelector("#add-form");
 const inputTitle = document.querySelector("#title");
 const inputAuthor = document.querySelector("#author");
 const ratingContainer = document.querySelector("[data-rating]");
-const cards = document.querySelectorAll(".card");
 const deleteBtn = document.querySelector("[data-btn-delete]");
 const editBtn = document.querySelector("[data-btn-edit]");
 const sections = {
@@ -20,7 +18,6 @@ const sections = {
   toRead: document.querySelector("#to-read"),
   completed: document.querySelector("#completed"),
 };
-
 
 function addBookToLibrary(title, author, readingStatus, rating) {
   const book = new Book(title, author);
@@ -31,7 +28,13 @@ function addBookToLibrary(title, author, readingStatus, rating) {
 }
 
 function displayBookCard(book) {
-  const bookCard = renderBook(book.id, book.title, book.author, book.status, book.rating);
+  const bookCard = renderBook(
+    book.id,
+    book.title,
+    book.author,
+    book.status,
+    book.rating,
+  );
   const sectionToAppendTo = defineSection(book.status);
   const gridContainer = sectionToAppendTo.querySelector(".grid");
   gridContainer.appendChild(bookCard);
@@ -66,11 +69,22 @@ function defineSection(readingStatus) {
 
 function showSectionAndTitle(section) {
   const title = section.querySelector("[data-section-title]");
-  if (title.classList.contains("hidden") && section.classList.contains("hidden")) {
+  if (
+    title.classList.contains("hidden") &&
+    section.classList.contains("hidden")
+  ) {
     title.classList.remove("hidden");
     section.classList.remove("hidden");
   } else {
     return;
+  }
+}
+
+function hideSectionAndTitle(section) {
+  if (!section.querySelector(".card")) {
+    const title = section.querySelector("[data-section-title]");
+    title.classList.add("hidden");
+    section.classList.add("hidden");
   }
 }
 
@@ -89,13 +103,14 @@ function showCards() {
     renderEmptyStateCard();
     console.log("No books in local storage");
   } else {
-    books.forEach(book => displayBookCard(book));
+    books.forEach((book) => displayBookCard(book));
   }
 }
 
 function deleteBookFromLibrary(e) {
   const closestCard = e.target.closest(".card");
   const bookId = closestCard.getAttribute("data-id");
+  const closestSection = e.target.closest("section");
 
   Swal.fire({
     theme: "dark",
@@ -109,18 +124,15 @@ function deleteBookFromLibrary(e) {
     if (result.isConfirmed) {
       myLibrary.deleteBook(bookId);
       closestCard.remove();
-
-      Swal.fire({
-        theme: "dark",
-        text: "Book has been deleted",
-        icon: "success",
-      });
+      hideSectionAndTitle(closestSection);
     }
   });
 }
 
 function toggleContextMenu(e) {
   const currentCard = e.currentTarget;
+  const deleteBtn = currentCard.querySelector("[data-btn-delete]");
+  // const editBtn = currentCard.querySelector("[data-btn-edit]");
   const contextMenu = currentCard.querySelector("[data-context-menu]");
   const menuDimensions = contextMenu.getBoundingClientRect();
   let isVisible = contextMenu.classList.contains("flex");
@@ -137,6 +149,8 @@ function toggleContextMenu(e) {
     contextMenu.classList.remove("flex");
     contextMenu.classList.add("hidden");
   }
+
+  deleteBtn.addEventListener("click", deleteBookFromLibrary);
 }
 
 function showError(input, message) {
@@ -196,6 +210,6 @@ window.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", handleUserInput);
   inputTitle.addEventListener("input", () => validateField(inputTitle));
   inputAuthor.addEventListener("input", () => validateField(inputAuthor));
-  // deleteBtn.addEventListener("click", deleteBookFromLibrary);
+  const cards = document.querySelectorAll(".card");
   cards.forEach((card) => card.addEventListener("click", toggleContextMenu));
 });

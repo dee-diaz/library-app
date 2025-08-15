@@ -11,7 +11,7 @@ const books = myLibrary.getBooks();
 const form = document.querySelector("#add-form");
 const inputTitle = document.querySelector("#title");
 const inputAuthor = document.querySelector("#author");
-form.setAttribute("novalidate", "");
+// form.setAttribute("novalidate", "");
 const ratingContainer = document.querySelector("[data-rating]");
 const cards = document.querySelectorAll(".card");
 const deleteBtn = document.querySelector("[data-btn-delete]");
@@ -21,6 +21,8 @@ const sections = {
   toRead: document.querySelector("#to-read"),
   completed: document.querySelector("#completed"),
 };
+
+console.log(books);
 
 function addBookToLibrary(title, author, readingStatus, rating) {
   const book = new Book(title, author);
@@ -168,6 +170,7 @@ export function clearAllErrors() {
 
 function handleUserInput(e) {
   e.preventDefault();
+  form.setAttribute("novalidate", "");
 
   const titleValid = validateField(inputTitle);
   const authorValid = validateField(inputAuthor);
@@ -192,5 +195,3 @@ window.addEventListener("DOMContentLoaded", () => {
   // deleteBtn.addEventListener("click", deleteBookFromLibrary);
   cards.forEach((card) => card.addEventListener("click", toggleContextMenu));
 });
-
-myLibrary.getBooks();

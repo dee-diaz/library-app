@@ -166,7 +166,7 @@ export function renderBook(id, title, author, readingStatus, rating) {
   const ratingText = document.createElement("span");
   ratingText.className = "text-t-secondary";
   ratingText.innerText = `${rating}`;
-  if (readingStatus === STATUS.READ) {
+  if (readingStatus === STATUS.READ && rating !== "") {
     ratingCont.classList.remove("hidden");
     ratingCont.classList.add("flex");
   } else {

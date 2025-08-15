@@ -60,14 +60,15 @@ function defineSection(readingStatus) {
       section = sections.reading;
       break;
   }
-  showSectionTitle(section);
+  showSectionAndTitle(section);
   return section;
 }
 
-function showSectionTitle(section) {
+function showSectionAndTitle(section) {
   const title = section.querySelector("[data-section-title]");
-  if (title.classList.contains("hidden")) {
+  if (title.classList.contains("hidden") && section.classList.contains("hidden")) {
     title.classList.remove("hidden");
+    section.classList.remove("hidden");
   } else {
     return;
   }

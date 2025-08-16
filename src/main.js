@@ -133,14 +133,69 @@ function deleteBookFromLibrary(e) {
   });
 }
 
+function getBookInfo(e) {
+  const closestCard = e.target.closest(".card");
+  const bookId = closestCard.getAttribute("data-id");
+  const bookInfo = myLibrary.getBookInfo(bookId);
+  return bookInfo;
+}
+
+function handleEdit(e) {
+  form.removeEventListener("submit", handleUserInput);
+  const closestCard = e.target.closest(".card");
+  const closestSection = e.target.closest("section");
+  const book = getBookInfo(e);
+  const dialogTitle = dialog.querySelector("h2");
+  dialogTitle.textContent = "Edit book";
+  inputAuthor.value = book.author;
+  inputTitle.value = book.title;
+  dialog.showModal();
+
+
+  form.addEventListener("submit", editBook);
+
+  function editBook(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const values = Object.fromEntries(formData.entries());
+
+    const editedBook = {
+      id: values.id,
+      title: values.title,
+      author: values.author,
+      status: values.status,
+      rating: values.rating,
+    };
+
+    myLibrary.deleteBook(book.id);
+    closestCard.remove();
+    hideSectionAndTitle(closestSection);
+
+    addBookToLibrary(
+      editedBook.title,
+      editedBook.author,
+      editedBook.status,
+      editedBook.rating,
+    );
+
+    form.reset();
+    ratingContainer.classList.add("hidden");
+    dialog.close();
+    clearAllErrors();
+    form.removeEventListener("submit", editBook);
+    form.addEventListener("submit", handleUserInput);
+    dialogTitle.textContent = "Add new book";
+  }
+}
+
 function toggleContextMenu(e) {
   const currentCard = e.target.closest(".card");
 
   if (currentCard) {
     const contextMenu = currentCard.querySelector("[data-context-menu]");
     const deleteBtn = currentCard.querySelector("[data-btn-delete]");
+    const editBtn = currentCard.querySelector("[data-btn-edit]");
     const menuDimensions = contextMenu.getBoundingClientRect();
-    const cardDimensions = currentCard.getBoundingClientRect();
     let isVisible = contextMenu.classList.contains("flex");
     closeContextMenus();
     contextMenu.classList.remove("hidden");
@@ -155,6 +210,7 @@ function toggleContextMenu(e) {
       contextMenu.classList.remove("flex");
       contextMenu.classList.add("hidden");
     }
+    editBtn.addEventListener("click", handleEdit);
     deleteBtn.addEventListener("click", deleteBookFromLibrary);
   } else {
     closeContextMenus();
@@ -163,7 +219,9 @@ function toggleContextMenu(e) {
 
 function closeContextMenus() {
   const cms = document.querySelectorAll("[data-context-menu]");
-  const deleteBtns = document.querySelectorAll("[data-btn-delete]");
+  const actionBtns = document.querySelectorAll(
+    "[data-btn-delete], [data-btn-edit]",
+  );
   cms.forEach((cm) => {
     if (cm.classList.contains("flex")) {
       cm.classList.remove("flex");
@@ -171,7 +229,7 @@ function closeContextMenus() {
     }
   });
 
-  deleteBtns.forEach((btn) =>
+  actionBtns.forEach((btn) =>
     btn.removeEventListener("click", deleteBookFromLibrary),
   );
 }

@@ -4,7 +4,7 @@ function Book(title, author) {
 
   Object.defineProperty(this, "id", {
     value: generateRandomID(),
-    writable: false,
+    writable: true,
     enumerable: true,
     configurable: false,
   });

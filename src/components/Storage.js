@@ -32,4 +32,11 @@ Storage.prototype.deleteBook = function (id) {
   console.table(books);
 };
 
+Storage.prototype.getBookInfo = function (id) {
+  const books = this.getBooks();
+  return books.find(book => book.id === id);
+};
+
+
+
 export default Storage;

@@ -1,12 +1,13 @@
 import "./app.css";
 import Swal from "sweetalert2";
-import { Book, BOOK_STATUS, BOOK_RATING } from "./components/Book.js";
+import CONFIG from "./components/Config.js";
+import Book from "./components/Book.js";
 import Storage from "./components/Storage.js";
 import initBookModal from "./components/Modal.js";
 import { renderEmptyStateCard, renderBook } from "./components/render.js";
 
 
-const myLibrary = new Storage();
+
 // const dialog = document.querySelector("dialog");
 const form = document.querySelector("#add-form");
 form.setAttribute("novalidate", "");
@@ -21,9 +22,9 @@ const sections = {
 
 function addBookToLibrary(title, author, readingStatus, rating) {
   const book = new Book(title, author);
-  if (readingStatus) book.setStatus(readingStatus);
-  if (rating) book.setRating(rating);
-  myLibrary.saveBook(book);
+  if (readingStatus) book.status = readingStatus;
+  if (rating) book.rating = rating;
+  Storage.saveBook(book);
   displayBookCard(book);
 }
 
@@ -98,7 +99,7 @@ function removeEmptyCard() {
 }
 
 function showCards() {
-  const books = myLibrary.getBooks();
+  const books = Storage.getBooks();
   if (books.length === 0) {
     renderEmptyStateCard();
     console.log("No books in local storage");
@@ -122,13 +123,13 @@ function deleteBookFromLibrary(e) {
     confirmButtonText: "Yes, delete it",
   }).then((result) => {
     if (result.isConfirmed) {
-      myLibrary.deleteBook(bookId);
+      Storage.deleteBook(bookId);
       closestCard.remove();
       hideSectionAndTitle(closestSection);
-      const books = myLibrary.getBooks();
+      const books = Storage.getBooks();
       if (books.length === 0) {
         renderEmptyStateCard();
-        initModal();
+        initBookModal();
       }
     }
   });
@@ -137,7 +138,7 @@ function deleteBookFromLibrary(e) {
 function getBookInfo(e) {
   const closestCard = e.target.closest(".card");
   const bookId = closestCard.getAttribute("data-id");
-  const bookInfo = myLibrary.getBookInfo(bookId);
+  const bookInfo = Storage.getBookInfo(bookId);
   return bookInfo;
 }
 
@@ -167,7 +168,7 @@ function handleEdit(e) {
       rating: values.rating,
     };
 
-    myLibrary.deleteBook(book.id);
+    Storage.deleteBook(book.id);
     closestCard.remove();
     hideSectionAndTitle(closestSection);
 
@@ -274,6 +275,7 @@ function handleUserInput(e) {
   const authorValid = validateField(inputAuthor);
 
   if (titleValid && authorValid) {
+    const dialog = document.querySelector("dialog");
     const formData = new FormData(e.target);
     const values = Object.fromEntries(formData.entries());
 

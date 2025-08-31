@@ -1,42 +1,36 @@
-function Storage() {
-  if (!new.target)
-    throw Error("You must use the 'new' operator to call the constructor");
-}
-
-Storage.prototype.getBooks = function () {
-  let books;
-
-  if (localStorage.getItem("books") === null) {
-    books = [];
-  } else {
-    books = JSON.parse(localStorage.getItem("books"));
-  }
-  return books;
-};
-
-Storage.prototype.saveBook = function (book) {
-  const books = this.getBooks();
-  books.push(book);
-  localStorage.setItem("books", JSON.stringify(books));
-  console.table(books);
-};
-
-Storage.prototype.deleteBook = function (id) {
-  const books = this.getBooks();
-  books.forEach((book, index) => {
-    if (book.id === id) {
-      books.splice(index, 1);
+class Storage {
+  static getBooks() {
+    try {
+      return JSON.parse(localStorage.getItem("books") || "[]");
+    } catch (error) {
+      console.warn("Error loading books:", error);
+      return [];
     }
-  });
-  localStorage.setItem("books", JSON.stringify(books));
-  console.table(books);
-};
+  }
 
-Storage.prototype.getBookInfo = function (id) {
-  const books = this.getBooks();
-  return books.find(book => book.id === id);
-};
+  static saveBook(book) {
+    const books = this.getBooks();
+    books.push(book);
+    localStorage.setItem("books", JSON.stringify(books));
+    console.table(books);
+  }
 
+  static deleteBook(id) {
+    const books = this.getBooks();
+    books.forEach((book, index) => {
+      if (book.id === id) {
+        books.splice(index, 1);
+      }
+    });
+    localStorage.setItem("books", JSON.stringify(books));
+    console.table(books);
+  }
 
+  static getBookInfo(id) {
+    const books = this.getBooks();
+    console.log(books.find((book) => book.id === id));
+    return books.find((book) => book.id === id);
+  }
+}
 
 export default Storage;

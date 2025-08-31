@@ -1,53 +1,79 @@
-import { clearAllErrors } from "../main";
-
-function initModal() {
-  const addButtons = document.querySelectorAll("[data-btn-add]");
-  const dialog = document.querySelector("dialog");
-  const closeBtn = document.querySelector("[data-btn-close]");
-  const ratingContainer = document.querySelector("[data-rating]");
-  const statusInput = document.querySelector("#status");
-  const ratingInput = document.querySelector("#rating");
-
-  function showModal() {
-    clearAllErrors();
-    dialog.showModal();
+class Modal {
+  constructor(selector) {
+    this.dialog = document.querySelector(selector);
+    this.closeBtn = this.dialog.querySelector("[data-btn-close]");
+    this.#bindEvents();
   }
 
-  function closeModal() {
-    dialog.close();
+  showModal() {
+    this.dialog.showModal();
   }
 
-  // When user marks a book as "read", the rating input field appears
-  function showRatingInputField() {
-    const value = statusInput.value;
-    if (value === "read") {
-      ratingContainer.classList.remove("hidden");
-      ratingContainer.classList.add("flex");
-      ratingInput.disabled = false;
-    } else {
-      ratingContainer.classList.remove("flex");
-      ratingContainer.classList.add("hidden");
-      ratingInput.disabled = true;
-    }
+  closeModal() {
+    this.dialog.close();
   }
 
-  // The modal closes when user clicks outside of it
-  function closeOnOutsideClick(e) {
-    const dialogDimensions = dialog.getBoundingClientRect();
+  #closeOnOutsideClick(e) {
+    const dialogDimensions = this.dialog.getBoundingClientRect();
     if (
       e.clientX < dialogDimensions.left ||
       e.clientX > dialogDimensions.right ||
       e.clientY < dialogDimensions.top ||
       e.clientY > dialogDimensions.bottom
     ) {
-      dialog.close();
+      this.closeModal();
     }
   }
 
-  addButtons.forEach((button) => button.addEventListener("click", showModal));
-  closeBtn.addEventListener("click", closeModal);
-  dialog.addEventListener("click", closeOnOutsideClick);
-  statusInput.addEventListener("change", showRatingInputField);
+  #bindEvents(){
+    this.dialog.addEventListener("click", (e) => this.#closeOnOutsideClick(e));
+    this.closeBtn.addEventListener("click", () => this.closeModal());
+  };
 }
 
-export default initModal;
+class BookForm {
+  constructor(formSelector, modalInstance) {
+    this.form = document.querySelector(formSelector);
+    this.modal = modalInstance;
+    this.statusInput = this.form.querySelector("#status");
+    this.ratingInput = this.form.querySelector("#rating");
+    this.ratingContainer = this.form.querySelector("[data-rating]");
+    this.#bindEvents();
+  }
+
+  #bindEvents() {
+    this.statusInput.addEventListener("change", () =>
+      this.#toggleRatingField(),
+    );
+  }
+
+  #toggleRatingField() {
+    const value = this.statusInput.value;
+    if (value === "read") {
+      this.ratingContainer.classList.remove("hidden");
+      this.ratingContainer.classList.add("flex");
+      this.ratingInput.disabled = false;
+    } else {
+      this.ratingContainer.classList.remove("flex");
+      this.ratingContainer.classList.add("hidden");
+      this.ratingInput.disabled = true;
+    }
+  }
+
+}
+
+function initAddBookButtons(modal) {
+  const addButtons = document.querySelectorAll("[data-btn-add]");
+  addButtons.forEach((button) => {
+    button.addEventListener("click", () => modal.showModal());
+  });
+}
+
+function initBookModal() {
+  const modal = new Modal("dialog");
+  const bookForm = new BookForm("form", modal);
+
+  initAddBookButtons(modal);
+}
+
+export default initBookModal;

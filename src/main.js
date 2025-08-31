@@ -2,15 +2,12 @@ import "./app.css";
 import Swal from "sweetalert2";
 import { Book, BOOK_STATUS, BOOK_RATING } from "./components/Book.js";
 import Storage from "./components/Storage.js";
-import initModal from "./components/modal.js";
+import initBookModal from "./components/Modal.js";
 import { renderEmptyStateCard, renderBook } from "./components/render.js";
 
-const book = new Book("Nausea", "Jean-Paul Sartre");
-book.rating = "in-progress";
-console.log(book);
 
 const myLibrary = new Storage();
-const dialog = document.querySelector("dialog");
+// const dialog = document.querySelector("dialog");
 const form = document.querySelector("#add-form");
 form.setAttribute("novalidate", "");
 const inputTitle = document.querySelector("#title");
@@ -289,7 +286,7 @@ function handleUserInput(e) {
 
 window.addEventListener("DOMContentLoaded", () => {
   showCards();
-  initModal();
+  initBookModal();
   form.addEventListener("submit", handleUserInput);
   inputTitle.addEventListener("input", () => validateField(inputTitle));
   inputAuthor.addEventListener("input", () => validateField(inputAuthor));

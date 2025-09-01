@@ -1,6 +1,6 @@
-export function renderEmptyStateCard() {
-  const mainContainer = document.querySelector("#main-content");
+import CONFIG from "./Config.js";
 
+function createEmptyCardEl() {
   const cardEmpty = document.createElement("div");
   cardEmpty.id = "card-empty";
   cardEmpty.className =
@@ -32,22 +32,16 @@ export function renderEmptyStateCard() {
   cardEmpty.appendChild(para);
   cardEmpty.appendChild(button);
 
+  return cardEmpty;
+}
+
+export function renderEmptyStateCard() {
+  const mainContainer = document.querySelector("#main-content");
+  const cardEmpty = createEmptyCardEl();
   mainContainer.appendChild(cardEmpty);
 }
 
-export function renderBook(id, title, author, readingStatus, rating) {
-  const STATUS = {
-    READ: "read",
-    NOTREAD: "not-read",
-    READING: "reading",
-  };
-
-  const STATUS_MESSAGE = {
-    READ: "Read",
-    NOTREAD: "To read",
-    READING: "In progress",
-  };
-
+function createBookCardEl(id, title, author, readingStatus, rating) {
   const bookCard = document.createElement("div");
   bookCard.className =
     "card relative min-h-32 cursor-pointer rounded-lg border border-b-primary bg-s-card p-4 transition-shadow duration-300 ease-out hover:shadow-card-hover active:shadow-card-hover md:p-5";
@@ -114,19 +108,19 @@ export function renderBook(id, title, author, readingStatus, rating) {
   statusText.className = "text-sm";
 
   switch (readingStatus) {
-    case STATUS.READ:
+    case CONFIG.STATUS.READ:
       icon.src = "/check.svg";
-      statusText.textContent = STATUS_MESSAGE.READ;
+      statusText.textContent = CONFIG.STATUS_MESSAGE.READ;
       statusText.classList.add("text-status-completed");
       break;
-    case STATUS.NOTREAD:
+    case CONFIG.STATUS.NOT_READ:
       icon.src = "/bookmark.svg";
-      statusText.textContent = STATUS_MESSAGE.NOTREAD;
+      statusText.textContent = CONFIG.STATUS_MESSAGE.NOT_READ;
       statusText.classList.add("text-status-to-read");
       break;
-    case STATUS.READING:
+    case CONFIG.STATUS.READING:
       icon.src = "/eye.svg";
-      statusText.textContent = STATUS_MESSAGE.READING;
+      statusText.textContent = CONFIG.STATUS_MESSAGE.READING;
       statusText.classList.add("text-status-reading");
       break;
   }
@@ -139,7 +133,7 @@ export function renderBook(id, title, author, readingStatus, rating) {
   const ratingText = document.createElement("span");
   ratingText.className = "text-t-secondary";
   ratingText.innerText = `${rating}`;
-  if (readingStatus === STATUS.READ && rating !== "") {
+  if (readingStatus === CONFIG.STATUS.READ && rating !== "") {
     ratingCont.classList.remove("hidden");
     ratingCont.classList.add("flex");
   } else {
@@ -162,4 +156,48 @@ export function renderBook(id, title, author, readingStatus, rating) {
   bookCard.appendChild(bottomCont);
 
   return bookCard;
+}
+
+export function renderBookCard(id, title, author, readingStatus, rating) {
+  const bookCard = createBookCardEl(id, title, author, readingStatus, rating);
+
+  let section;
+
+  switch (readingStatus) {
+    case CONFIG.STATUS.READ:
+      section = CONFIG.SECTIONS.COMPLETED;
+      break;
+    case CONFIG.STATUS.NOT_READ:
+      section = CONFIG.SECTIONS.TO_READ;
+      break;
+    case CONFIG.STATUS.READING:
+      section = CONFIG.SECTIONS.READING;
+      break;
+    default:
+      section = CONFIG.SECTIONS.TO_READ;
+      break;
+  }
+
+  const gridContainer = section.querySelector(".grid");
+  showSectionAndTitle(section);
+  gridContainer.appendChild(bookCard);
+}
+
+function showSectionAndTitle(section) {
+  const title = section.querySelector("[data-section-title]");
+  if (
+    title.classList.contains("hidden") &&
+    section.classList.contains("hidden")
+  ) {
+    title.classList.remove("hidden");
+    section.classList.remove("hidden");
+  }
+}
+
+function hideSectionAndTitle(section) {
+  if (!section.querySelector(".card")) {
+    const title = section.querySelector("[data-section-title]");
+    title.classList.add("hidden");
+    section.classList.add("hidden");
+  }
 }

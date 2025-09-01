@@ -4,15 +4,8 @@ import CONFIG from "./components/Config.js";
 import Book from "./components/Book.js";
 import Storage from "./components/Storage.js";
 import initBookModal from "./components/Modal.js";
-import { renderEmptyStateCard, renderBook } from "./components/render.js";
+import { renderEmptyStateCard, renderBookCard } from "./components/render.js";
 
-const book = new Book("Nausea", "Jean-Paul Sartre");
-book.status = CONFIG.STATUS.READ;
-book.rating = CONFIG.RATING.THREE;
-
-// Storage.saveBook(book)
-
-console.table(Storage.getBooks());
 
 // const dialog = document.querySelector("dialog");
 const form = document.querySelector("#add-form");
@@ -20,11 +13,7 @@ form.setAttribute("novalidate", "");
 const inputTitle = document.querySelector("#title");
 const inputAuthor = document.querySelector("#author");
 const ratingContainer = document.querySelector("[data-rating]");
-const sections = {
-  reading: document.querySelector("#reading"),
-  toRead: document.querySelector("#to-read"),
-  completed: document.querySelector("#completed"),
-};
+
 
 function addBookToLibrary(title, author, readingStatus, rating) {
   const book = new Book(title, author);
@@ -35,73 +24,24 @@ function addBookToLibrary(title, author, readingStatus, rating) {
 }
 
 function displayBookCard(book) {
-  const bookCard = renderBook(
+  const bookCard = renderBookCard(
     book.id,
     book.title,
     book.author,
     book.status,
     book.rating,
   );
-  const sectionToAppendTo = defineSection(book.status);
-  const gridContainer = sectionToAppendTo.querySelector(".grid");
-  gridContainer.appendChild(bookCard);
+
   removeEmptyCard();
 }
 
-function defineSection(readingStatus) {
-  const status = {
-    read: "read",
-    notRead: "not-read",
-    reading: "reading",
-  };
 
-  let section;
-
-  if (!readingStatus) section = sections.toRead;
-
-  switch (readingStatus) {
-    case status.read:
-      section = sections.completed;
-      break;
-    case status.notRead:
-      section = sections.toRead;
-      break;
-    case status.reading:
-      section = sections.reading;
-      break;
-  }
-  showSectionAndTitle(section);
-  return section;
-}
-
-function showSectionAndTitle(section) {
-  const title = section.querySelector("[data-section-title]");
-  if (
-    title.classList.contains("hidden") &&
-    section.classList.contains("hidden")
-  ) {
-    title.classList.remove("hidden");
-    section.classList.remove("hidden");
-  } else {
-    return;
-  }
-}
-
-function hideSectionAndTitle(section) {
-  if (!section.querySelector(".card")) {
-    const title = section.querySelector("[data-section-title]");
-    title.classList.add("hidden");
-    section.classList.add("hidden");
-  }
-}
 
 function removeEmptyCard() {
   const emptyCard = document.querySelector("#card-empty");
   if (emptyCard) {
     emptyCard.remove();
-  } else {
-    return;
-  }
+  } 
 }
 
 function showCards() {

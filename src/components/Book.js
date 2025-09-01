@@ -1,6 +1,6 @@
 import CONFIG from "./Config";
 
-export class Book {
+class Book {
   #status = CONFIG.STATUS.NOT_READ;
   #rating = "";
 

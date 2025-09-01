@@ -6,7 +6,13 @@ import Storage from "./components/Storage.js";
 import initBookModal from "./components/Modal.js";
 import { renderEmptyStateCard, renderBook } from "./components/render.js";
 
+const book = new Book("Nausea", "Jean-Paul Sartre");
+book.status = CONFIG.STATUS.READ;
+book.rating = CONFIG.RATING.THREE;
 
+// Storage.saveBook(book)
+
+console.table(Storage.getBooks());
 
 // const dialog = document.querySelector("dialog");
 const form = document.querySelector("#add-form");

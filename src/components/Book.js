@@ -1,15 +1,8 @@
 import CONFIG from "./Config";
 
 export class Book {
-  status = CONFIG.STATUS.NOT_READ;
-  rating = "";
-
-  #generateRandomId() {
-    const array = new Uint32Array(2);
-    crypto.getRandomValues(array);
-    const id = array[0].toString(36) + array[1].toString(36);
-    return id;
-  }
+  #status = CONFIG.STATUS.NOT_READ;
+  #rating = "";
 
   constructor(title, author) {
     this.id = this.#generateRandomId();
@@ -17,8 +10,18 @@ export class Book {
     this.author = author;
   }
 
+  toJSON() {
+    return {
+      id: this.id,
+      title: this.title,
+      author: this.author,
+      status: this.#status,
+      rating: this.#rating,
+    };
+  }
+
   get status() {
-    return this.status;
+    return this.#status;
   }
 
   set status(status) {
@@ -28,11 +31,11 @@ export class Book {
         `Wrong status. Available statuses: ${validStatuses.join(", ")}`,
       );
     }
-    this.status = status;
+    this.#status = status;
   }
 
   get rating() {
-    return this.rating;
+    return this.#rating;
   }
 
   set rating(rating) {
@@ -40,7 +43,14 @@ export class Book {
     if (!validRatings.includes(rating)) {
       throw new Error("Rate from 1 to 5");
     }
-    this.rating = rating;
+    this.#rating = rating;
+  }
+
+  #generateRandomId() {
+    const array = new Uint32Array(2);
+    crypto.getRandomValues(array);
+    const id = array[0].toString(36) + array[1].toString(36);
+    return id;
   }
 }
 

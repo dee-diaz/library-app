@@ -10,7 +10,7 @@ class Storage {
 
   static saveBook(book) {
     const books = this.getBooks();
-    books.push(book);
+    books.push(book.toJSON());
     localStorage.setItem("books", JSON.stringify(books));
     console.table(books);
   }

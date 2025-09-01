@@ -5,11 +5,11 @@ const CONFIG = {
     READING: "reading",
   },
   RATING: {
-    1: "1/5",
-    2: "2/5",
-    3: "3/5",
-    4: "4/5",
-    5: "5/5",
+    ONE: "1/5",
+    TWO: "2/5",
+    THREE: "3/5",
+    FOUR: "4/5",
+    FIVE: "5/5",
   }
 };
 

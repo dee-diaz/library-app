@@ -1,92 +1,69 @@
 import "./app.css";
-import Swal from "sweetalert2";
-import CONFIG from "./components/Config.js";
-import Book from "./components/Book.js";
 import Storage from "./components/Storage.js";
-import initBookModal from "./components/Modal.js";
-import { renderEmptyStateCard, renderBookCard } from "./components/render.js";
-
-
-// const dialog = document.querySelector("dialog");
-const form = document.querySelector("#add-form");
-form.setAttribute("novalidate", "");
-const inputTitle = document.querySelector("#title");
-const inputAuthor = document.querySelector("#author");
-const ratingContainer = document.querySelector("[data-rating]");
-
-
-function addBookToLibrary(title, author, readingStatus, rating) {
-  const book = new Book(title, author);
-  if (readingStatus) book.status = readingStatus;
-  if (rating) book.rating = rating;
-  Storage.saveBook(book);
-  displayBookCard(book);
-}
-
-function displayBookCard(book) {
-  const bookCard = renderBookCard(
-    book.id,
-    book.title,
-    book.author,
-    book.status,
-    book.rating,
-  );
-
-  removeEmptyCard();
-}
+import initModal from "./components/Modal.js";
+import BookManager from "./components/BookManager.js";
+import BookForm from "./components/BookForm.js";
+import ui from "./components/ui.js";
+import FormValidator from "./components/FormValidator.js";
 
 
 
-function removeEmptyCard() {
-  const emptyCard = document.querySelector("#card-empty");
-  if (emptyCard) {
-    emptyCard.remove();
-  } 
-}
+// function displayBookCard(book) {
+//   const bookCard = renderBookCard(
+//     book.id,
+//     book.title,
+//     book.author,
+//     book.status,
+//     book.rating,
+//   );
 
-function showCards() {
-  const books = Storage.getBooks();
-  if (books.length === 0) {
-    renderEmptyStateCard();
-    console.log("No books in local storage");
-  } else {
-    books.forEach((book) => displayBookCard(book));
-  }
-}
+//   removeEmptyCard();
+// }
 
-function deleteBookFromLibrary(e) {
-  const closestCard = e.target.closest(".card");
-  const bookId = closestCard.getAttribute("data-id");
-  const closestSection = e.target.closest("section");
+// function removeEmptyCard() {
+//   const emptyCard = document.querySelector("#card-empty");
+//   if (emptyCard) {
+//     emptyCard.remove();
+//   }
+// }
 
-  Swal.fire({
-    theme: "dark",
-    title: "Are you sure?",
-    text: "You won't be able to revert this",
-    showCancelButton: true,
-    confirmButtonColor: "#d33",
-    cancelButtonColor: "#242426",
-    confirmButtonText: "Yes, delete it",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Storage.deleteBook(bookId);
-      closestCard.remove();
-      hideSectionAndTitle(closestSection);
-      const books = Storage.getBooks();
-      if (books.length === 0) {
-        renderEmptyStateCard();
-        initBookModal();
-      }
-    }
-  });
-}
+// function showCards() {
+//   const books = Storage.getBooks();
+//   if (books.length === 0) {
+//     renderEmptyStateCard();
+//     console.log("No books in local storage");
+//   } else {
+//     books.forEach((book) => displayBookCard(book));
+//   }
+// }
 
-function getBookInfo(e) {
-  const closestCard = e.target.closest(".card");
-  const bookId = closestCard.getAttribute("data-id");
-  const bookInfo = Storage.getBookInfo(bookId);
-  return bookInfo;
-}
+// function getBookInfo(e) {
+//   const closestCard = e.target.closest(".card");
+//   const bookId = closestCard.getAttribute("data-id");
+//   const bookInfo = Storage.getBookInfo(bookId);
+//   return bookInfo;
+// }
+
+// function handleUserInput(e) {
+//   e.preventDefault();
+//   const inputTitle = document.querySelector("#title");
+//   const inputAuthor = document.querySelector("#author");
+
+//   const titleValid = FormValidator.validateInput(inputTitle);
+//   const authorValid = FormValidator.validateInput(inputAuthor);
+
+//   if (titleValid && authorValid) {
+//     const dialog = document.querySelector("dialog");
+//     const formData = new FormData(e.target);
+//     const values = Object.fromEntries(formData.entries());
+
+//     addBookToLibrary(values.title, values.author, values.status, values.rating);
+//     FormValidator.resetForm();
+//     // ratingContainer.classList.add("hidden");
+//     bookForm.toggleRatingField();
+//     dialog.close();
+//   }
+// }
 
 function handleEdit(e) {
   form.removeEventListener("submit", handleUserInput);
@@ -158,7 +135,7 @@ function toggleContextMenu(e) {
       contextMenu.classList.add("hidden");
     }
     editBtn.addEventListener("click", handleEdit);
-    deleteBtn.addEventListener("click", deleteBookFromLibrary);
+    deleteBtn.addEventListener("click", BookManager.deleteBookFromLibrary);
   } else {
     closeContextMenus();
   }
@@ -177,66 +154,18 @@ function closeContextMenus() {
   });
 
   actionBtns.forEach((btn) =>
-    btn.removeEventListener("click", deleteBookFromLibrary),
+    btn.removeEventListener("click", BookManager.deleteBookFromLibrary),
   );
 }
 
-function showError(input, message) {
-  input.classList.add("border-red-400");
-  input.nextElementSibling.classList.add("opacity-100");
-  input.nextElementSibling.textContent = message;
+function initApp() {
+  initModal();
+  const dialog = document.querySelector("dialog");
+  const form = document.querySelector("form");
+  ui.showCards();
 }
 
-function removeError(input) {
-  input.classList.remove("border-red-400");
-  input.nextElementSibling.classList.remove("opacity-100");
-  input.nextElementSibling.textContent = "";
-}
-
-function validateField(input) {
-  const minLength = 2;
-  const errorMessages = {
-    title: "Please enter the book title",
-    author: "Please enter the author's name",
-  };
-
-  if (input.value.trim().length < minLength) {
-    showError(input, errorMessages[input.id]);
-    return false;
-  } else {
-    removeError(input);
-    return true;
-  }
-}
-
-export function clearAllErrors() {
-  removeError(inputTitle);
-  removeError(inputAuthor);
-}
-
-function handleUserInput(e) {
-  e.preventDefault();
-
-  const titleValid = validateField(inputTitle);
-  const authorValid = validateField(inputAuthor);
-
-  if (titleValid && authorValid) {
-    const dialog = document.querySelector("dialog");
-    const formData = new FormData(e.target);
-    const values = Object.fromEntries(formData.entries());
-
-    addBookToLibrary(values.title, values.author, values.status, values.rating);
-    form.reset();
-    ratingContainer.classList.add("hidden");
-    dialog.close();
-  }
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  showCards();
-  initBookModal();
-  form.addEventListener("submit", handleUserInput);
-  inputTitle.addEventListener("input", () => validateField(inputTitle));
-  inputAuthor.addEventListener("input", () => validateField(inputAuthor));
+document.addEventListener("DOMContentLoaded", () => {
+  initApp();
   window.addEventListener("click", toggleContextMenu);
 });

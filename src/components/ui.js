@@ -1,4 +1,5 @@
 import CONFIG from "./Config.js";
+import Storage from "./Storage.js";
 
 function createEmptyCardEl() {
   const cardEmpty = document.createElement("div");
@@ -35,7 +36,7 @@ function createEmptyCardEl() {
   return cardEmpty;
 }
 
-export function renderEmptyStateCard() {
+function renderEmptyStateCard() {
   const mainContainer = document.querySelector("#main-content");
   const cardEmpty = createEmptyCardEl();
   mainContainer.appendChild(cardEmpty);
@@ -158,7 +159,7 @@ function createBookCardEl(id, title, author, readingStatus, rating) {
   return bookCard;
 }
 
-export function renderBookCard(id, title, author, readingStatus, rating) {
+function renderBookCard(id, title, author, readingStatus, rating) {
   const bookCard = createBookCardEl(id, title, author, readingStatus, rating);
 
   let section;
@@ -201,3 +202,44 @@ function hideSectionAndTitle(section) {
     section.classList.add("hidden");
   }
 }
+
+function displayBookCard(book) {
+  const bookCard = renderBookCard(
+    book.id,
+    book.title,
+    book.author,
+    book.status,
+    book.rating,
+  );
+
+  removeEmptyCard();
+}
+
+function removeEmptyCard() {
+  const emptyCard = document.querySelector("#card-empty");
+  if (emptyCard) {
+    emptyCard.remove();
+  }
+}
+
+function showCards() {
+  const books = Storage.getBooks();
+  if (books.length === 0) {
+    renderEmptyStateCard();
+    console.log("No books in local storage");
+  } else {
+    books.forEach((book) => displayBookCard(book));
+  }
+}
+
+export default {
+  createEmptyCardEl,
+  renderEmptyStateCard,
+  createBookCardEl,
+  renderBookCard,
+  showSectionAndTitle,
+  hideSectionAndTitle,
+  displayBookCard,
+  removeEmptyCard,
+  showCards,
+};

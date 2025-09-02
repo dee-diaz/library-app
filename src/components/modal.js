@@ -35,7 +35,7 @@ class Modal {
   }
 }
 
-function initAddBookButtons(modal) {
+export function initAddBookButtons(modal) {
     const addButtons = document.querySelectorAll("[data-btn-add]");
     addButtons.forEach((button) => {
       button.addEventListener("click", () => modal.showModal());
@@ -43,11 +43,9 @@ function initAddBookButtons(modal) {
   }
 
 
-function initModal() {
+export function initModal() {
   const modal = new Modal("dialog");
   const bookForm = new BookForm("form", modal);
 
   initAddBookButtons(modal);
 }
-
-export default initModal;

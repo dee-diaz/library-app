@@ -2,6 +2,7 @@ import Book from "./Book";
 import Storage from "./Storage";
 import ui from "./ui";
 import Swal from "sweetalert2";
+import { initAddBookButtons } from "./Modal";
 
 class BookManager {
   static addBookToLibrary(title, author, readingStatus, rating) {
@@ -16,6 +17,7 @@ class BookManager {
     const closestCard = e.target.closest(".card");
     const bookId = closestCard.getAttribute("data-id");
     const closestSection = e.target.closest("section");
+    const modal = document.querySelector("dialog");
     Swal.fire({
       theme: "dark",
       title: "Are you sure?",
@@ -32,7 +34,7 @@ class BookManager {
         const books = Storage.getBooks();
         if (books.length === 0) {
           ui.renderEmptyStateCard();
-          // initBookModal();       ????
+          initAddBookButtons(modal);
         }
       }
     });

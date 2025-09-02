@@ -10,15 +10,14 @@ class BookForm {
     this.statusInput = this.form.querySelector("#status");
     this.ratingInput = this.form.querySelector("#rating");
     this.ratingContainer = this.form.querySelector("[data-rating]");
+    this.handleSubmit = (e) => this.#handleUserInput(e);
+    this.handleStatusChange = () => this.#toggleRatingField();
     this.#bindEvents();
   }
 
   #bindEvents() {
-    this.statusInput.addEventListener("change", () =>
-      this.#toggleRatingField(),
-    );
-
-    this.form.addEventListener("submit", (e) => this.#handleUserInput(e));
+    this.statusInput.addEventListener("change", this.handleStatusChange);
+    this.form.addEventListener("submit", this.handleSubmit);
   }
 
   #toggleRatingField() {
@@ -56,6 +55,5 @@ class BookForm {
     }
   }
 }
-
 
 export default BookForm;

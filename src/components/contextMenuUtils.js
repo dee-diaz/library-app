@@ -1,7 +1,6 @@
 import BookManager from "./BookManager";
-import FormValidator from "./FormValidator";
 import ui from "./ui";
-import appComponents from "../main";
+import { appComponents } from "../main";
 
 export function toggleContextMenu(e) {
   const currentCard = e.target.closest(".card");

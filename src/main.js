@@ -5,7 +5,7 @@ import BookForm from "./components/BookForm.js";
 import { toggleContextMenu, initContextMenuHandlers } from "./components/contextMenuUtils.js";
 
 
-const appComponents = (function() {
+export const appComponents = (function() {
   const modal = new Modal("dialog");
   const form = new BookForm("form", modal);
 
@@ -23,6 +23,3 @@ function initApp() {
 document.addEventListener("DOMContentLoaded", () => {
   initApp();
 });
-
-
-export default appComponents;

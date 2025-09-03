@@ -5,6 +5,10 @@ import Swal from "sweetalert2";
 import { initAddBookButtons } from "./Modal";
 
 class BookManager {
+  #bookToEdit;
+  #cardEl;
+  #sectionEl;
+
   static addBookToLibrary(title, author, readingStatus, rating) {
     const book = new Book(title, author);
     if (readingStatus) book.status = readingStatus;

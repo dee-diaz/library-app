@@ -1,7 +1,14 @@
 import BookManager from "./BookManager";
 import FormValidator from "./FormValidator";
+import Storage from "./Storage";
+import ui from "./ui";
 
 class BookForm {
+  #isEdit = false;
+  #bookToEdit;
+  #cardEl;
+  #sectionEl;
+
   constructor(formSelector, modalInstance) {
     this.form = document.querySelector(formSelector);
     this.modal = modalInstance;
@@ -33,6 +40,15 @@ class BookForm {
     }
   }
 
+  prepareForEdit(bookObj, cardEl, sectionEl) {
+    this.#isEdit = true;
+    this.#bookToEdit = bookObj;
+    this.#cardEl = cardEl;
+    this.#sectionEl = sectionEl;
+  }
+
+
+
   #handleUserInput(e) {
     e.preventDefault();
 
@@ -44,6 +60,13 @@ class BookForm {
       const values = Object.fromEntries(formData.entries());
       if (!values.title || !values.author)
         throw new Error("No title and/or author data received");
+
+      if (this.#isEdit) {
+        Storage.deleteBook(this.#bookToEdit.id);
+        ui.removeCard(this.#cardEl);
+        ui.hideSectionAndTitle(this.#sectionEl)
+      }
+
       BookManager.addBookToLibrary(
         values.title,
         values.author,
@@ -51,7 +74,12 @@ class BookForm {
         values.rating,
       );
       FormValidator.resetForm();
+      ui.resetForm();
       this.modal.closeModal();
+      this.#isEdit = false;
+      this.#bookToEdit = undefined;
+      this.#cardEl = undefined;
+      this.#sectionEl = undefined;
     }
   }
 }

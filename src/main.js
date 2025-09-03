@@ -1,16 +1,28 @@
 import "./app.css";
 import ui from "./components/ui.js";
-import { initModal } from "./components/Modal.js";
-import { toggleContextMenu } from "./components/contextMenuUtils.js";
+import { initAddBookButtons, Modal } from "./components/Modal.js";
+import BookForm from "./components/BookForm.js";
+import { toggleContextMenu, initContextMenuHandlers } from "./components/contextMenuUtils.js";
 
+
+const appComponents = (function() {
+  const modal = new Modal("dialog");
+  const form = new BookForm("form", modal);
+
+  return { modal, form }
+})();
 
 
 function initApp() {
   ui.showCards();
-  initModal();
+  initAddBookButtons(appComponents.modal);
   window.addEventListener("click", toggleContextMenu);
+  initContextMenuHandlers();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   initApp();
 });
+
+
+export default appComponents;

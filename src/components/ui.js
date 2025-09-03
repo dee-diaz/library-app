@@ -1,5 +1,6 @@
 import CONFIG from "./Config.js";
 import Storage from "./Storage.js";
+import BookManager from "./BookManager.js";
 
 function createEmptyCardEl() {
   const cardEmpty = document.createElement("div");
@@ -212,14 +213,11 @@ function displayBookCard(book) {
     book.rating,
   );
 
-  removeEmptyCard();
+  removeCard(document.querySelector("#card-empty"));
 }
 
-function removeEmptyCard() {
-  const emptyCard = document.querySelector("#card-empty");
-  if (emptyCard) {
-    emptyCard.remove();
-  }
+function removeCard(cardEl) {
+  if (cardEl) cardEl.remove();
 }
 
 function showCards() {
@@ -232,6 +230,28 @@ function showCards() {
   }
 }
 
+const form = document.querySelector("form");
+const inputTitle = document.querySelector("#title");
+const inputAuthor = document.querySelector("#author");
+const ratingContainer = document.querySelector("[data-rating]");
+const modalTitle = document.querySelector("dialog h2");
+const btnSubmit = form.querySelector("button[type='submit']");
+
+function renderEditForm(e) {
+  const bookToEdit = BookManager.getBookInfo(e);
+
+  modalTitle.textContent = "Edit book";
+  inputAuthor.value = bookToEdit.author;
+  inputTitle.value = bookToEdit.title;
+  btnSubmit.textContent = "Save changes"
+}
+
+function resetForm() {
+  modalTitle.textContent = "Add new book";
+  btnSubmit.textContent = "Add";
+  ratingContainer.classList.add("hidden");
+}
+
 export default {
   createEmptyCardEl,
   renderEmptyStateCard,
@@ -240,6 +260,8 @@ export default {
   showSectionAndTitle,
   hideSectionAndTitle,
   displayBookCard,
-  removeEmptyCard,
+  removeCard,
   showCards,
+  renderEditForm, 
+  resetForm,
 };

@@ -28,7 +28,6 @@ class Storage {
 
   static getBookInfo(id) {
     const books = this.getBooks();
-    console.log(books.find((book) => book.id === id));
     return books.find((book) => book.id === id);
   }
 }

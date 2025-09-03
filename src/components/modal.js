@@ -1,7 +1,7 @@
 import FormValidator from "./FormValidator";
 import BookForm from "./BookForm";
 
-class Modal {
+export class Modal {
   constructor(selector) {
     this.dialog = document.querySelector(selector);
     this.closeBtn = this.dialog.querySelector("[data-btn-close]");
@@ -45,7 +45,11 @@ export function initAddBookButtons(modal) {
 
 export function initModal() {
   const modal = new Modal("dialog");
-  const bookForm = new BookForm("form", modal);
+  const form = new BookForm("form", modal);
 
   initAddBookButtons(modal);
+}
+
+export function initForm() {
+  return new BookForm("form", modal);
 }

@@ -35,21 +35,12 @@ export class Modal {
   }
 }
 
+export const modal = new Modal("dialog");
+export const form = new BookForm("form", modal);
+
 export function initAddBookButtons(modal) {
-    const addButtons = document.querySelectorAll("[data-btn-add]");
-    addButtons.forEach((button) => {
-      button.addEventListener("click", () => modal.showModal());
-    });
-  }
-
-
-export function initModal() {
-  const modal = new Modal("dialog");
-  const form = new BookForm("form", modal);
-
-  initAddBookButtons(modal);
-}
-
-export function initForm() {
-  return new BookForm("form", modal);
+  const addButtons = document.querySelectorAll("[data-btn-add]");
+  addButtons.forEach((button) => {
+    button.addEventListener("click", () => modal.showModal());
+  });
 }

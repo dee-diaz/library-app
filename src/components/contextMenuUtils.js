@@ -1,6 +1,6 @@
 import BookManager from "./BookManager";
 import ui from "./ui";
-import { appComponents } from "../main";
+import { modal, form } from "./Modal";
 
 export function toggleContextMenu(e) {
   const currentCard = e.target.closest(".card");
@@ -42,8 +42,8 @@ function handleEdit(e) {
   const closestSection = e.target.closest("section");
   const bookToEdit = BookManager.getBookInfo(e);
   ui.renderEditForm(e);
-  appComponents.form.prepareForEdit(bookToEdit, closestCard, closestSection);
-  appComponents.modal.showModal();
+  form.prepareForEdit(bookToEdit, closestCard, closestSection);
+  modal.showModal();
 }
 
 function handleDocumentClick(e) {
